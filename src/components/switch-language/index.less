@@ -1,0 +1,43 @@
+.switch-lang {
+  :global(.@{ant-prefix}-dropdown-menu-item) {
+    display: flex;
+    align-items: center;
+    > span:not(:global(.@{iconfont-css-prefix})) {
+      flex: 1;
+    }
+    :global(.@{iconfont-css-prefix}) {
+      margin-right: 5px;
+
+      svg {
+        width: 30px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.btn {
+  padding: 0;
+  &:global(.@{ant-prefix}-btn > .@{iconfont-css-prefix}) {
+    svg {
+      width: 30px;
+      height: 20px;
+    }
+  }
+}
+
+.label {
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    margin-left: 5px;
+    font-size: 12px;
+    opacity: 0.45;
+  }
+}
+
+.selected-item {
+  color: var(--primary-5);
+  background-color: var(--primary-1);
+}

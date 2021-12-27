@@ -1,0 +1,16 @@
+{
+  "name": "plugin-back-stage-template",
+  "version": "1.0.10",
+  "description": "后台管理模版",
+  "main": "index.js",
+  "scripts": {},
+  "author": {
+    "name": "moneko"
+  },
+  "license": "MIT",
+  "devDependencies": {},
+  "dependencies": {
+    "antd": "^4.17.3",
+    "qiankun": "^2.6.3"
+  }
+}
