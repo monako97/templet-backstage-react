@@ -1,7 +1,7 @@
 module.exports = {
   routeBaseName: '/',
   modifyVars: {},
-  antPrefixCls: 'sky',
+  prefixCls: 'sky',
   moduleRules: [],
   importOnDemand: [],
   proxy: []

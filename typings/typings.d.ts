@@ -13,7 +13,12 @@ declare const author: {
   name: string;
 };
 
-declare const antPrefixCls: string;
+declare const providerConfig: {
+  prefixCls: string;
+  iconPrefixCls: string;
+  input: React.InputHTMLAttributes<HTMLInputElement>;
+  [key: string]: any;
+};
 
 declare const routeBaseName: string;
 
