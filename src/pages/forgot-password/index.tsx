@@ -108,7 +108,7 @@ const ForgotPassword: React.FC = () => {
       <Form
         name="forgot"
         form={form}
-        className={styles['forgot-form']}
+        className={styles.forgotForm}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"

@@ -33,7 +33,7 @@ const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
   );
 
   return (
-    <Layout.Header className={styles['bg-white']}>
+    <Layout.Header className={styles.bgWhite}>
       {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: styles.trigger,
         onClick: () => isFunction(onCollapsed) && onCollapsed()

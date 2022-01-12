@@ -23,7 +23,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text, highlight }: Highli
     }
   }, [text]);
   return (
-    <div className={styles['highlight-text']}>
+    <div className={styles.highlightText}>
       {texts?.map((item, i) => {
         return (
           <span

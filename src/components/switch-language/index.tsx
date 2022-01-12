@@ -23,7 +23,7 @@ const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLang
             onClick={() => handleClick(item.namespace)}
             icon={<Icon type={item.namespace} />}
             // eslint-disable-next-line no-undefined
-            className={selected ? styles['selected-item'] : undefined}
+            className={selected ? styles.selectedItem : undefined}
             // disabled={selected}
           >
             <div className={styles.label}>
@@ -37,7 +37,7 @@ const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLang
   );
 
   return (
-    <Dropdown overlay={menu} placement="bottomCenter" overlayClassName={styles['switch-lang']}>
+    <Dropdown overlay={menu} placement="bottomCenter" overlayClassName={styles.switchLang}>
       <Button className={`flex f-a-c ${styles.btn} ${className ? className : ''}`} type="text">
         <Icon type={getLocal().namespace} />
       </Button>

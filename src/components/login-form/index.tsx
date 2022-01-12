@@ -93,7 +93,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type, onSubmit }: LoginFormProps)
           <Checkbox>{getLanguage('remember')}</Checkbox>
         </Item>
         <Button
-          className={styles['login-form-forgot']}
+          className={styles.loginFormForgot}
           type="link"
           onClick={() => {
             navigate('/forgot-password');
@@ -107,7 +107,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type, onSubmit }: LoginFormProps)
         <Button
           type="primary"
           htmlType="submit"
-          className={styles['login-form-button']}
+          className={styles.loginFormButton}
           loading={loading}
           icon={<Icon type="login" />}
         >

@@ -6,7 +6,7 @@ const year = new Date().getFullYear();
 
 const LayoutFooter: React.FC = () => {
   return (
-    <Layout.Footer className={styles['layout-footer']}>
+    <Layout.Footer className={styles.layoutFooter}>
       <p>
         <a target="_blank" rel="noopener noreferrer">
           {projectName}
