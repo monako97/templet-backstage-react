@@ -6,21 +6,19 @@
   width: 100%;
   height: 100%;
   
-  :global {
-    .@{ant-prefix}-tabs-tab-btn {
-      transition: all @transition-duration @transition-timing-function;
+  :global(.@{ant-prefix}-tabs) {
+    padding: 5px;
+  }
+  :global( .@{ant-prefix}-tabs-tab-btn) {
+    transition: all @transition-duration @transition-timing-function;
 
-      span {
-        display: flex;
-        align-items: center;
-      }
+    span {
+      display: flex;
+      align-items: center;
     }
-    .@{ant-prefix}-tabs {
-      padding: 5px;
-    }
-    .@{ant-prefix}-form-item-label {
-      display: none;
-    }
+  }
+  :global(.@{ant-prefix}-form-item-label) {
+    display: none;
   }
 }
 

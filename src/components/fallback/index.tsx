@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Skeleton } from 'antd';
-import { useOutlet } from 'react-router-dom';
+import { useOutlet } from 'plugin-runtime';
 
 const Fallback: React.FC = () => {
   const outlet = useOutlet();
