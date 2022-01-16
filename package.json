@@ -10,7 +10,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "antd": "^4.17.3",
+    "antd": "^4.18.3",
     "qiankun": "^2.6.3"
   }
 }

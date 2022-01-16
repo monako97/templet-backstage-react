@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { AutoComplete, Input } from 'antd';
 import { emailWhitelist } from '@/utils';
-import type { OptionsType, OptionData, OptionGroupData } from 'rc-select/lib/interface';
+import type { DefaultOptionType } from 'antd/es/select';
 import HighlightText from '@/components/highlight-text';
 import Icon from '@/components/icon';
 
@@ -11,7 +11,7 @@ interface EmailProps {
   value?: string;
   disabled?: boolean;
   // eslint-disable-next-line no-unused-vars
-  onChange?: (value: string, option: OptionsType | OptionData | OptionGroupData) => void;
+  onChange?: (value: string, option: DefaultOptionType | DefaultOptionType[]) => void;
 }
 
 const Email: React.FC<EmailProps> = ({
@@ -19,11 +19,11 @@ const Email: React.FC<EmailProps> = ({
   placeholder,
   disabled,
   value,
-  onChange
+  onChange,
 }: EmailProps) => {
-  const [result, setResult] = useState<OptionsType>([]);
+  const [result, setResult] = useState<DefaultOptionType[]>([]);
   const handleSearch = useCallback((val: string) => {
-    let res: OptionsType | [] = [],
+    let res: DefaultOptionType[] | [] = [],
       whitelist = emailWhitelist,
       inputValue = val;
 
@@ -36,7 +36,7 @@ const Email: React.FC<EmailProps> = ({
     }
     res = whitelist.map((domain) => ({
       value: inputValue + domain,
-      label: <HighlightText text={inputValue} highlight={domain} />
+      label: <HighlightText text={inputValue} highlight={domain} />,
     }));
     setResult(res);
   }, []);

@@ -1,5 +1,5 @@
 import { loginByUserName } from '@/services/user';
-import type { ResponseBody } from 'plugin-runtime';
+import type { ModelType, ModelActionType, ModelEffectMap, ResponseBody } from 'plugin-runtime';
 
 export interface UserInfo {
   address?: string;
@@ -32,28 +32,28 @@ const model: ModelType<UserModelType> = {
   effects: {
     // 用户名登录
     *fetchLoginByUserName(
-      { payload }: ModelActionType,
+      { payload }: Partial<ModelActionType>,
       { call, put }: ModelEffectMap
     ): Generator<unknown, void, ResponseBody> {
       const resp: ResponseBody = yield call(() => loginByUserName(payload.data));
 
       yield put({
         type: 'user/saveUserInfo',
-        payload: resp.result
+        payload: resp.result,
       });
     },
     // Email登录
     *fetchLoginByEmail(
-      { payload }: ModelActionType,
+      { payload }: Partial<ModelActionType>,
       { call, put }: ModelEffectMap
     ): Generator<unknown, void, ResponseBody> {
       const resp: ResponseBody = yield call(() => loginByUserName(payload.data));
 
       yield put({
         type: 'user/saveUserInfo',
-        payload: resp.result
+        payload: resp.result,
       });
-    }
+    },
   },
   reducers: {
     saveUserInfo(state: UserModelType, action: ModelActionType): UserModelType {
@@ -64,8 +64,8 @@ const model: ModelType<UserModelType> = {
     },
     reset(): UserModelType {
       return {};
-    }
-  }
+    },
+  },
 };
 
 export default model;

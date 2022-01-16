@@ -33,7 +33,7 @@ const ForgotPassword: React.FC = () => {
             message.success(resp.message);
             setLoading(false);
             dispatch({
-              type: 'user/fetchLogout'
+              type: 'user/fetchLogout',
             });
             navigate('/login');
           },
@@ -41,8 +41,8 @@ const ForgotPassword: React.FC = () => {
             message.error(errMsg);
             setLoading(false);
             setGetVC(false);
-          }
-        }
+          },
+        },
       });
     },
     [dispatch, navigate]
@@ -62,8 +62,8 @@ const ForgotPassword: React.FC = () => {
         failure(errMsg: string) {
           message.error(errMsg);
           setVCLoading(false);
-        }
-      }
+        },
+      },
     });
   }, [dispatch, form]);
 
@@ -125,8 +125,8 @@ const ForgotPassword: React.FC = () => {
                   return Promise.resolve();
                 }
                 return Promise.reject(getLanguage('ph:validator-email'));
-              }
-            })
+              },
+            }),
           ]}
           hasFeedback
         >

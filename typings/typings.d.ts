@@ -9,23 +9,6 @@ declare module './index.less' {
   export default styles;
 }
 
-declare const author: {
-  name: string;
-};
-
-declare const providerConfig: {
-  prefixCls: string;
-  iconPrefixCls: string;
-  input: React.InputHTMLAttributes<HTMLInputElement>;
-  [key: string]: any;
-};
-
-declare const routeBaseName: string;
-
-declare const version: string;
-
-declare const projectName: string;
-
 interface Window {
   areaPaddingTop?: number;
   areaPaddingBottom?: number;
@@ -34,10 +17,3 @@ interface Window {
 interface PureComponentProps {
   path: string;
 }
-
-type HighlightTextJsonType =
-  | {
-      highlight?: boolean;
-      text: string;
-    }[]
-  | null;

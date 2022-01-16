@@ -25,13 +25,13 @@ export type ForgotPassWordParams = {
 // 用户名登录
 export const loginByUserName = async ({
   username,
-  password
+  password,
 }: LoginByUserNameParams): Promise<LoginResponse> => {
   return request('/api/login_by_username', {
     data: {
       username,
-      password
+      password,
     },
-    method: 'POST'
+    method: 'POST',
   });
 };

@@ -52,8 +52,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ type, onSubmit }: LoginFormProps)
                   return Promise.resolve();
                 }
                 return Promise.reject(translatFunction(getLanguage('ph:len-range'), '4-10'));
-              }
-            })
+              },
+            }),
           ]}
           hasFeedback
         >
@@ -72,8 +72,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ type, onSubmit }: LoginFormProps)
                   return Promise.resolve();
                 }
                 return Promise.reject(getLanguage('ph:validator-email'));
-              }
-            })
+              },
+            }),
           ]}
           hasFeedback
         >

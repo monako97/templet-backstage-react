@@ -46,8 +46,8 @@ const zhCN: LocalesConfType = {
     'ph:email': '请填写电子邮箱',
     'ph:validator-email': '请填写正确的电子邮箱',
     'ph:please-fill': '请填写',
-    'ph:fill-correct': '请填写合法的'
-  }
+    'ph:fill-correct': '请填写合法的',
+  },
 };
 
 export default zhCN;

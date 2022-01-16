@@ -1,6 +1,7 @@
 import React from 'react';
 import { Layout } from 'antd';
 import styles from './index.less';
+import { projectBasicInfo } from 'plugin-runtime';
 
 const year = new Date().getFullYear();
 
@@ -9,11 +10,11 @@ const LayoutFooter: React.FC = () => {
     <Layout.Footer className={styles.layoutFooter}>
       <p>
         <a target="_blank" rel="noopener noreferrer">
-          {projectName}
+          {projectBasicInfo.projectName}
         </a>
         &nbsp;&copy; {year} Created by&nbsp;
         <a target="_blank" rel="noopener noreferrer">
-          {author.name}
+          {JSON.stringify(projectBasicInfo.author)}
         </a>
       </p>
       <p>

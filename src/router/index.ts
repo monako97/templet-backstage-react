@@ -10,27 +10,27 @@ const routers = [
     children: [
       {
         path: 'login',
-        onlyLogin: true
+        onlyLogin: true,
       },
       {
         path: 'forgot-password',
-        onlyLogin: true
+        onlyLogin: true,
       },
       {
         path: '*',
         onlyLogin: true,
         element: React.createElement(Navigate, {
           to: '/login',
-          replace: true
-        })
+          replace: true,
+        }),
       },
       {
         path: 'home',
-        icon: React.createElement(Icon, { type: 'home-nav' })
+        icon: React.createElement(Icon, { type: 'home-nav' }),
       },
       {
         path: 'dynamic',
-        hideMenu: true
+        hideMenu: true,
       },
       {
         path: 'micro',
@@ -47,13 +47,13 @@ const routers = [
                     path: ':id',
                     children: [
                       {
-                        path: ':name'
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
+                        path: ':name',
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
           {
             path: 'dynamic',
@@ -63,23 +63,23 @@ const routers = [
                 path: ':id',
                 children: [
                   {
-                    path: ':name'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
+                    path: ':name',
+                  },
+                ],
+              },
+            ],
+          },
+        ],
       },
       {
         path: '*',
         element: React.createElement(Navigate, {
           to: '/home',
-          replace: true
-        })
-      }
-    ]
-  }
+          replace: true,
+        }),
+      },
+    ],
+  },
 ] as unknown as RouterProps;
 
 export default routers;

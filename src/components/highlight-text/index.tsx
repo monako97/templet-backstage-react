@@ -8,7 +8,7 @@ interface HighlightTextProps {
 }
 
 const HighlightText: React.FC<HighlightTextProps> = ({ text, highlight }: HighlightTextProps) => {
-  const [texts, setTexts] = useState<HighlightTextJsonType>();
+  const [texts, setTexts] = useState<HighlightTextProps[] | null>();
 
   useMemo(() => {
     if (typeof text === 'string') {
@@ -27,7 +27,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text, highlight }: Highli
       {texts?.map((item, i) => {
         return (
           <span
-            key={item.text + i}
+            key={i + (item.text?.toString() || '')}
             // eslint-disable-next-line no-undefined
             className={item.highlight ? styles.high : undefined}
           >

@@ -1,4 +1,6 @@
-module.exports = {
+import type { MockConfiguration } from 'plugin-runtime';
+
+const conf: MockConfiguration = {
   'POST /api/upload_file': (req, res) => {
     const { files } = req;
 
@@ -7,7 +9,7 @@ module.exports = {
     const resp = {
       status: 200,
       message: '上传成功',
-      result: 'data:image/jpeg;base64,' + strBase64
+      result: 'data:image/jpeg;base64,' + strBase64,
     };
 
     res.status(resp.status).send(resp);
@@ -29,10 +31,12 @@ module.exports = {
         phone: '173****5454',
         status: 1,
         update_time: 1612553329000,
-        username: req.body.username
-      }
+        username: req.body.username,
+      },
     };
 
     res.status(resp.status).send(resp);
-  }
+  },
 };
+
+export default conf;

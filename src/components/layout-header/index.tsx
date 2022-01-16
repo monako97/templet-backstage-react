@@ -20,7 +20,7 @@ const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
   const { getLanguage } = useLocale();
   const handleLogout = useCallback(() => {
     dispatch({
-      type: 'user/logout'
+      type: 'user/logout',
     });
   }, [dispatch]);
 
@@ -36,7 +36,7 @@ const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
     <Layout.Header className={styles.bgWhite}>
       {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: styles.trigger,
-        onClick: () => isFunction(onCollapsed) && onCollapsed()
+        onClick: () => isFunction(onCollapsed) && onCollapsed(),
       })}
       <div className={styles.right}>
         <Dropdown overlay={menu} placement="bottomRight">

@@ -20,7 +20,7 @@ const Login: React.FC = () => {
   const { getLanguage } = useLocale();
   const loginType: LoginType[] = [
     { label: getLanguage('sign-in-username'), type: 'username', icon: 'personal-nav' },
-    { label: getLanguage('sign-in-email'), type: 'email', icon: 'email' }
+    { label: getLanguage('sign-in-email'), type: 'email', icon: 'email' },
   ];
   const handleLogin = (
     values: LoginByUserNameParams | LoginByEmailParams,
@@ -48,8 +48,8 @@ const Login: React.FC = () => {
           }
           message.error(errMsg);
           funcLoad = null;
-        }
-      }
+        },
+      },
     });
   };
 

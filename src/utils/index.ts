@@ -1,11 +1,18 @@
+import { ReactNode } from 'react';
+
 export const HIGHLIGHT_RegExp = /%c:(.+?):c%/i;
 
-export function stringToHighlightJson(text: string): HighlightTextJsonType {
+export interface HighlightTextType {
+  text?: ReactNode;
+  highlight?: ReactNode;
+}
+
+export function stringToHighlightJson(text: string): HighlightTextType[] | null {
   let str = text,
     strArr = HIGHLIGHT_RegExp.exec(str);
 
   if (strArr) {
-    const textArr: HighlightTextJsonType = [];
+    const textArr: HighlightTextType[] = [];
 
     for (; strArr !== null; strArr = HIGHLIGHT_RegExp.exec(str)) {
       // 普通部分
@@ -13,21 +20,21 @@ export function stringToHighlightJson(text: string): HighlightTextJsonType {
 
       if (normalText.trim().length) {
         textArr.push({
-          text: normalText
+          text: normalText,
         });
       }
 
       // 高亮部分
       textArr.push({
         highlight: true,
-        text: strArr[1]
+        text: strArr[1],
       });
       str = str.substring(strArr[0].length + strArr.index);
       normalText = null;
     }
     if (str.trim().length) {
       textArr.push({
-        text: str
+        text: str,
       });
     }
     return textArr;
@@ -47,7 +54,7 @@ export const emailWhitelist = [
   '@eyou.com',
   '@gmail.com',
   '@hotmail.com',
-  '@42du.cn'
+  '@42du.cn',
 ];
 export const PASSWORD_RegExp = /^(\w){6,16}$/;
 

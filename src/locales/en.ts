@@ -42,8 +42,8 @@ const en: LocalesConfType = {
     'ph:email': 'Please fill in your email address',
     'ph:validator-email': 'Please fill in the correct email address',
     'ph:please-fill': 'Please fill in',
-    'ph:fill-correct': 'Please fill in the legal'
-  }
+    'ph:fill-correct': 'Please fill in the legal',
+  },
 };
 
 export default en;
