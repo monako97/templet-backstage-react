@@ -1,5 +1,5 @@
 import React from 'react';
-import createFromIconfontCN from '@ant-design/icons/es/components/IconFont';
+import { createFromIconfontCN } from '@ant-design/icons';
 
 interface IconProps {
   type: string;
@@ -7,7 +7,7 @@ interface IconProps {
 }
 const AntIcon = createFromIconfontCN({
   scriptUrl: [
-    '//at.alicdn.com/t/font_2632005_3dawi8hz5x3.js', // i18n
+    '//at.alicdn.com/t/font_2632005_n3kt9cjpzn.js', // i18n
     '//at.alicdn.com/t/font_2446726_525dowa25vp.js', // i18n icon
   ],
 });

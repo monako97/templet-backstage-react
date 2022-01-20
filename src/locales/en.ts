@@ -1,7 +1,7 @@
 import type { LocalesConfType } from 'plugin-runtime';
 
 const en: LocalesConfType = {
-  namespace: 'en',
+  namespace: 'en_US',
   title: '英文',
   translation: {
     'route-home': 'Home',

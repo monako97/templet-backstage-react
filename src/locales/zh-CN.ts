@@ -1,7 +1,7 @@
 import type { LocalesConfType } from 'plugin-runtime';
 
 const zhCN: LocalesConfType = {
-  namespace: 'zh-CN',
+  namespace: 'zh_CN',
   title: '简体中文',
   translation: {
     'route-home': '主页',
