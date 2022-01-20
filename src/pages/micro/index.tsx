@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { loadMicroApp, MicroApp } from 'qiankun';
+import './index.global.less';
 
 const MirrorPage = () => {
   const [, setMicroApp] = useState<MicroApp>();
@@ -10,7 +11,7 @@ const MirrorPage = () => {
       {
         name: 'micro',
         entry: `//localhost:3000/`,
-        container: el.current!,
+        container: el.current as unknown as HTMLElement,
         props: {
           basename: '/micro',
         },
