@@ -1,6 +1,6 @@
 {
   "name": "plugin-back-stage-template",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "后台管理模版",
   "main": "index.js",
   "scripts": {},
