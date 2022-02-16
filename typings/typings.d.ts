@@ -16,4 +16,5 @@ interface Window {
 
 interface PureComponentProps {
   path: string;
+  selfUrl: string;
 }
