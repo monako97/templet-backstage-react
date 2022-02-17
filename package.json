@@ -20,8 +20,5 @@
     "typings",
     "LICENSE",
     "tsconfig.json"
-  ],
-  "resolutions": {
-    "terser": "npm:@swc/core"
-  }
+  ]
 }
