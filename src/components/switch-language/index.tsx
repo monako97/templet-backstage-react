@@ -37,7 +37,7 @@ const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLang
   );
 
   return (
-    <Dropdown overlay={menu} placement="bottomCenter" overlayClassName={styles.switchLang}>
+    <Dropdown overlay={menu} placement="bottom" overlayClassName={styles.switchLang}>
       <Button className={`flex f-a-c ${styles.btn} ${className ? className : ''}`} type="text">
         <Icon type={getLocal().namespace} />
       </Button>

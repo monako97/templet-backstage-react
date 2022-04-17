@@ -39,7 +39,7 @@ const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
         onClick: () => isFunction(onCollapsed) && onCollapsed(),
       })}
       <div className={styles.right}>
-        <Dropdown overlay={menu} placement="bottomRight">
+        <Dropdown overlay={menu} placement="bottom">
           <div className={styles.user}>
             <Badge count={0}>
               <Avatar src={userInfo?.avatar} />
