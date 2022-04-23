@@ -14,7 +14,7 @@ const LayoutFooter: React.FC = () => {
         </a>
         &nbsp;&copy; {year} Created by&nbsp;
         <a target="_blank" rel="noopener noreferrer">
-          {JSON.stringify(projectBasicInfo.author)}
+          {JSON.stringify(projectBasicInfo.programInfo.author)}
         </a>
       </p>
       <p>
