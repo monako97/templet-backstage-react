@@ -1,11 +1,11 @@
 import React from 'react';
 import { useLocale, useSelector, shallowEqual } from 'plugin-runtime';
 import styles from './index.less';
-import type { UserModelType } from '@/models/user';
+import type { UserModelType } from '@/models/account';
 
 const Home: React.FC = () => {
   const { getLanguage } = useLocale();
-  const userInfo = useSelector((state: { user: UserModelType }) => state.user, shallowEqual);
+  const userInfo = useSelector((state: { account: UserModelType }) => state.account, shallowEqual);
 
   return (
     <React.Fragment>

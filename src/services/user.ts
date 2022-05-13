@@ -1,5 +1,5 @@
 import { request } from 'plugin-runtime';
-import type { UserInfo } from '@/models/user';
+import type { UserInfo } from '@/models/account';
 
 interface LoginResponse {
   status: number;

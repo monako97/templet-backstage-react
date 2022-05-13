@@ -4,7 +4,7 @@ import { Avatar, Badge, Dropdown, Layout, Menu } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
 import SwitchLanguage from '@/components/switch-language';
 import { isEqual, isFunction } from 'lodash';
-import type { UserModelType } from '@/models/user';
+import type { UserModelType } from '@/models/account';
 import styles from './index.less';
 
 interface HeaderProps {
@@ -15,12 +15,12 @@ interface HeaderProps {
 
 const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
   const { collapsed, onCollapsed } = props;
-  const userInfo = useSelector((state: { user: UserModelType }) => state.user.info, isEqual);
+  const userInfo = useSelector((state: { account: UserModelType }) => state.account.info, isEqual);
   const dispatch = useDispatch();
   const { getLanguage } = useLocale();
   const handleLogout = useCallback(() => {
     dispatch({
-      type: 'user/logout',
+      type: 'account/logout',
     });
   }, [dispatch]);
 

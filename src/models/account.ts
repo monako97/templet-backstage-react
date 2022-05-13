@@ -26,7 +26,7 @@ export type UserModelType = {
 
 const model: ModelType<UserModelType> = {
   // model名称，view层用于提取state的key，需要保证唯一
-  namespace: 'user',
+  namespace: 'account',
   // 初始state状态
   state: {},
   effects: {
@@ -38,7 +38,7 @@ const model: ModelType<UserModelType> = {
       const resp: ResponseBody = yield call(() => loginByUserName(payload.data));
 
       yield put({
-        type: 'user/saveUserInfo',
+        type: 'account/saveUserInfo',
         payload: resp.result,
       });
     },
@@ -50,7 +50,7 @@ const model: ModelType<UserModelType> = {
       const resp: ResponseBody = yield call(() => loginByUserName(payload.data));
 
       yield put({
-        type: 'user/saveUserInfo',
+        type: 'account/saveUserInfo',
         payload: resp.result,
       });
     },

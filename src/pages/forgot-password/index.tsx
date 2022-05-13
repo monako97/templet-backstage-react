@@ -26,14 +26,14 @@ const ForgotPassword: React.FC = () => {
     (values: ForgotPassWordParams) => {
       setLoading(true);
       dispatch({
-        type: 'user/fetchForgetPassword',
+        type: 'account/fetchForgetPassword',
         payload: {
           data: values,
           success(resp: ResponseBody) {
             message.success(resp.message);
             setLoading(false);
             dispatch({
-              type: 'user/fetchLogout',
+              type: 'account/fetchLogout',
             });
             navigate('/login');
           },
@@ -51,7 +51,7 @@ const ForgotPassword: React.FC = () => {
   const getVerifyCode = useCallback(() => {
     setVCLoading(true);
     dispatch({
-      type: 'user/fetchForgetVerifyCode',
+      type: 'account/fetchForgetVerifyCode',
       payload: {
         data: form.getFieldsValue(),
         success(resp: ResponseBody) {

@@ -33,7 +33,7 @@ const Login: React.FC = () => {
       setLoading(true);
     }
     dispatch({
-      type: logintype === 'username' ? 'user/fetchLoginByUserName' : 'user/fetchLoginByEmail',
+      type: logintype === 'username' ? 'account/fetchLoginByUserName' : 'account/fetchLoginByEmail',
       payload: {
         data: values,
         success() {
