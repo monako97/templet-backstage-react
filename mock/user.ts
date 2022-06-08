@@ -17,9 +17,10 @@ const conf: MockConfiguration = {
   'POST /api/login_by_username': (req, res) => {
     const resp = {
       status: 200,
+      success: true,
       message: '请求成功',
       result: {
-        address: '湖北省,黄石市,大冶市,东风路街道',
+        address: '*********街道',
         avatar: '',
         birthday: 853718400000,
         create_time: 1576795086000,

@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector, useLocale } from 'plugin-runtime';
 import { Avatar, Badge, Dropdown, Layout, Menu } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
@@ -6,6 +6,7 @@ import SwitchLanguage from '@/components/switch-language';
 import { isEqual, isFunction } from 'lodash';
 import type { UserModelType } from '@/models/account';
 import styles from './index.less';
+import { ItemType } from 'antd/es/menu/hooks/useItems';
 
 interface HeaderProps {
   collapsed: boolean;
@@ -23,13 +24,16 @@ const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
       type: 'account/logout',
     });
   }, [dispatch]);
-
-  const menu = (
-    <Menu>
-      <Menu.Item key="logout" icon={<LogoutOutlined />} onClick={handleLogout}>
-        {getLanguage('sign-out')}
-      </Menu.Item>
-    </Menu>
+  const items = useMemo(
+    () =>
+      [
+        {
+          label: getLanguage('sign-out'),
+          icon: <LogoutOutlined />,
+          onClick: handleLogout,
+        },
+      ] as unknown as ItemType[],
+    [getLanguage, handleLogout]
   );
 
   return (
@@ -39,7 +43,7 @@ const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
         onClick: () => isFunction(onCollapsed) && onCollapsed(),
       })}
       <div className={styles.right}>
-        <Dropdown overlay={menu} placement="bottom">
+        <Dropdown overlay={<Menu items={items} />} placement="bottom">
           <div className={styles.user}>
             <Badge count={0}>
               <Avatar src={userInfo?.avatar} />

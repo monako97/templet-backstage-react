@@ -1,43 +1,14 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { loadMicroApp, MicroApp } from 'qiankun';
+import LoadMicro from '@/components/load-micro';
+import React from 'react';
 import './index.global.less';
 
 const MirrorPage = () => {
-  const [, setMicroApp] = useState<MicroApp>();
-  const el = useRef(null);
-
-  useEffect(() => {
-    const _microApp = loadMicroApp(
-      {
-        name: 'micro',
-        entry: `//localhost:3000/`,
-        container: el.current as unknown as HTMLElement,
-        props: {
-          basename: '/micro',
-        },
-      },
-      {
-        fetch(url, ...args) {
-          if (/^\/\/localhost:3000/.test(url as string)) {
-            return window.fetch(url, {
-              ...args,
-              mode: 'cors',
-              // credentials: "include",
-            });
-          }
-
-          return window.fetch(url, ...args);
-        },
-      }
-    );
-
-    setMicroApp(_microApp);
-    return () => {
-      _microApp?.unmount();
-    };
-  }, []);
-
-  return <div ref={el} />;
+  return (
+    <LoadMicro
+      entry={`${window.__MicroAppEntry__['topic-ui']}#/topic/list`}
+      name="topic-ui"
+    />
+  );
 };
 
 export default MirrorPage;

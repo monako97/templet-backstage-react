@@ -8,6 +8,7 @@ declare module './index.less' {
 
   export default styles;
 }
+
 declare module 'moment' {
   import { Dayjs } from 'dayjs';
   namespace moment {
@@ -16,10 +17,19 @@ declare module 'moment' {
   export = moment;
   export as namespace moment;
 }
+
+type MicrrorAppConf = {
+  desc: string;
+  name: string;
+  url: string;
+  activeRule: string[];
+};
+
 interface Window {
-  areaPaddingTop?: number;
-  areaPaddingBottom?: number;
+  __MicroAppEntry__: Record<string, string>;
+  __MicroAppActiveRule__: MicrrorAppConf[];
   rootInstance: {
+    // eslint-disable-next-line no-unused-vars
     render(children: React.ReactChild | Iterable<React.ReactNode>): void;
     unmount(): void;
   };
@@ -29,3 +39,12 @@ interface PureComponentProps {
   path: string;
   selfUrl: string;
 }
+
+declare const layoutSider:
+  | false
+  | {
+      theme?: 'light' | 'dark';
+      breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+    };
+
+declare const projectName: string;

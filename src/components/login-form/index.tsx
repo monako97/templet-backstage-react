@@ -1,35 +1,45 @@
-/* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './index.less';
-import { useNavigate, useLocale, translatFunction } from 'plugin-runtime';
-import { isFunction } from 'lodash';
+import { useNavigate, useLocale, translatFunction, useDispatch } from 'plugin-runtime';
 import { isEmail } from '@/utils';
 import Icon from '@/components/icon';
 import Email from '@/components/email';
 import InputPassword from '@/components/input-password';
+import type { ResponseBody } from 'plugin-runtime';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;
 
 interface LoginFormProps {
   type: 'email' | 'username';
-  onSubmit: (
-    values: LoginByUserNameParams | LoginByEmailParams,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-  ) => void;
 }
 const { Item } = Form;
 
-const LoginForm: React.FC<LoginFormProps> = ({ type, onSubmit }: LoginFormProps) => {
+const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
+  const dispatch = useDispatch();
   const { getLanguage } = useLocale();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const onFinish = (values: LoginByUserNameParams | LoginByEmailParams) => {
-    if (isFunction(onSubmit)) {
-      onSubmit(values, setLoading);
-    }
-  };
+  const onFinish = useCallback(
+    (data: LoginByUserNameParams | LoginByEmailParams) => {
+      setLoading(true);
+      dispatch({
+        type: 'account/login',
+        payload: {
+          type,
+          data,
+          callback(resp: ResponseBody) {
+            setLoading(false);
+            if (resp.success) {
+              navigate('/home?menuId=home');
+            }
+          },
+        },
+      });
+    },
+    [dispatch, navigate, type]
+  );
 
   return (
     <Form
@@ -39,6 +49,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type, onSubmit }: LoginFormProps)
       layout="vertical"
       autoComplete="off"
       requiredMark={false}
+      className={styles.form}
     >
       {type === 'username' && (
         <Item

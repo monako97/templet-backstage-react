@@ -1,4 +1,5 @@
 import { loginByUserName } from '@/services/user';
+import { isFunction } from 'lodash';
 import type { ModelType, ModelActionType, ModelEffectMap, ResponseBody } from 'plugin-runtime';
 
 export interface UserInfo {
@@ -25,33 +26,34 @@ export type UserModelType = {
 };
 
 const model: ModelType<UserModelType> = {
-  // model名称，view层用于提取state的key，需要保证唯一
   namespace: 'account',
-  // 初始state状态
   state: {},
   effects: {
-    // 用户名登录
-    *fetchLoginByUserName(
+    // 用户登录
+    *login(
       { payload }: Partial<ModelActionType>,
       { call, put }: ModelEffectMap
     ): Generator<unknown, void, ResponseBody> {
-      const resp: ResponseBody = yield call(() => loginByUserName(payload.data));
+      const { type, data } = payload;
+      const api = type === 'email' ? loginByUserName : loginByUserName;
+      const resp: ResponseBody = yield call(() => api(data));
 
+      if (isFunction(payload.callback)) {
+        payload.callback(resp);
+      }
       yield put({
         type: 'account/saveUserInfo',
         payload: resp.result,
       });
     },
-    // Email登录
-    *fetchLoginByEmail(
-      { payload }: Partial<ModelActionType>,
-      { call, put }: ModelEffectMap
+    *logout(
+      _: Partial<ModelActionType>,
+      { put }: ModelEffectMap
     ): Generator<unknown, void, ResponseBody> {
-      const resp: ResponseBody = yield call(() => loginByUserName(payload.data));
-
+      sessionStorage.clear();
+      localStorage.clear();
       yield put({
-        type: 'account/saveUserInfo',
-        payload: resp.result,
+        type: 'account/reset',
       });
     },
   },
@@ -59,8 +61,8 @@ const model: ModelType<UserModelType> = {
     saveUserInfo(state: UserModelType, action: ModelActionType): UserModelType {
       return { ...state, info: action.payload };
     },
-    logout(): UserModelType {
-      return {};
+    change(state: UserModelType, action: ModelActionType): UserModelType {
+      return { ...state, ...action.payload };
     },
     reset(): UserModelType {
       return {};

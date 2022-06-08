@@ -1,11 +1,17 @@
 import * as React from 'react';
-import { Skeleton } from 'antd';
-import { useOutlet } from 'plugin-runtime';
+import { ConfigProvider, Skeleton } from 'antd';
+import { projectBasicInfo, useOutlet } from 'plugin-runtime';
 
-const Fallback: React.FC = () => {
+const Fallback = () => {
   const outlet = useOutlet();
 
-  return outlet?.props.children ? outlet?.props.children : <Skeleton active />;
+  return outlet?.props.children ? (
+    outlet?.props.children
+  ) : (
+    <ConfigProvider {...projectBasicInfo.providerConfig}>
+      <Skeleton active />
+    </ConfigProvider>
+  );
 };
 
 export default Fallback;
