@@ -1,5 +1,5 @@
-import { router } from 'plugin-runtime';
-import type { ModelActionType, ModelEffectMap, ModelType } from 'plugin-runtime';
+import { router } from 'PackageNameByCore';
+import type { ModelActionType, ModelEffectMap, ModelType } from 'PackageNameByCore';
 
 const defaultMenu = [
   {

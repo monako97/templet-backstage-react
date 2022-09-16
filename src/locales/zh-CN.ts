@@ -1,4 +1,4 @@
-import type { LocalesConfType } from 'plugin-runtime';
+import type { LocalesConfType } from 'PackageNameByCore';
 
 const zhCN: LocalesConfType = {
   namespace: 'zh_CN',

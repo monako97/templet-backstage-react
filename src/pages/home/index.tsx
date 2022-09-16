@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocale, useSelector, shallowEqual } from 'plugin-runtime';
+import { useLocale, useSelector, shallowEqual } from 'PackageNameByCore';
 import styles from './index.less';
 import type { UserModelType } from '@/models/account';
 

@@ -1,4 +1,4 @@
-import { dispatch, rootStore } from 'plugin-runtime';
+import { dispatch, rootStore } from 'PackageNameByCore';
 import { isFunction, isEqual } from 'lodash';
 import { initGlobalState } from 'qiankun';
 import type { MicroAppStateActions } from 'qiankun';

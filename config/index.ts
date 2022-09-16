@@ -1,4 +1,4 @@
-import type { PartialConfigType } from 'plugin-runtime';
+import type { PartialConfigType } from 'PackageNameByCore';
 
 const conf: PartialConfigType = {
   modifyVars: {},

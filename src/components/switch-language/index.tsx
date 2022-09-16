@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useLocale, locales } from 'plugin-runtime';
+import { useLocale, locales } from 'PackageNameByCore';
 import { Button, Dropdown, Menu } from 'antd';
 import styles from './index.less';
 import Icon from '../icon';

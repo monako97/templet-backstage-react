@@ -1,6 +1,6 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react';
-import { useNavigate, useDispatch, useLocale, translatFunction } from 'plugin-runtime';
-import type { ResponseBody } from 'plugin-runtime';
+import { useNavigate, useDispatch, useLocale, translatFunction } from 'PackageNameByCore';
+import type { ResponseBody } from 'PackageNameByCore';
 import { Button, Form, Input, message } from 'antd';
 import Email from '@/components/email';
 import Icon from '@/components/icon';

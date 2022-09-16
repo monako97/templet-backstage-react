@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigate } from 'plugin-runtime';
-import type { RouterProps } from 'plugin-runtime';
+import { Navigate } from 'PackageNameByCore';
+import type { RouterProps } from 'PackageNameByCore';
 import Icon from '@/components/icon';
 
 const routers = [

@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from '@/components/icon';
 import { Input } from 'antd';
-import { useLocale } from 'plugin-runtime';
+import { useLocale } from 'PackageNameByCore';
 
 interface InputPasswordProps {
   placeholder?: string;

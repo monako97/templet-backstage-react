@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { loadMicroApp, MicroApp } from 'qiankun';
 import { isEqual } from 'lodash';
-import { useNavigate, rootStore } from 'plugin-runtime';
+import { useNavigate, rootStore } from 'PackageNameByCore';
 
 const microApps: Record<string, MicroApp> = {};
 

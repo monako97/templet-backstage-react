@@ -1,4 +1,4 @@
-import type { ModelType } from 'plugin-runtime';
+import type { ModelType } from 'PackageNameByCore';
 
 const model: ModelType<GlobalModelType> = {
   namespace: 'global',

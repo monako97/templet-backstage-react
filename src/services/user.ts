@@ -1,4 +1,4 @@
-import { request } from 'plugin-runtime';
+import { request } from 'PackageNameByRequest';
 import type { UserInfo } from '@/models/account';
 
 interface LoginResponse {

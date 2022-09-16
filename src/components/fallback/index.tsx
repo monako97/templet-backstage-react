@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ConfigProvider, Skeleton } from 'antd';
-import { projectBasicInfo, useOutlet } from 'plugin-runtime';
+import { projectBasicInfo, useOutlet } from 'PackageNameByCore';
 
 const Fallback = () => {
   const outlet = useOutlet();

@@ -1,6 +1,7 @@
 import { loginByUserName } from '@/services/user';
 import { isFunction } from 'lodash';
-import type { ModelType, ModelActionType, ModelEffectMap, ResponseBody } from 'plugin-runtime';
+import type { ModelType, ModelActionType, ModelEffectMap } from 'PackageNameByCore';
+import type { ResponseBody } from 'PackageNameByRequest';
 
 export interface UserInfo {
   address?: string;

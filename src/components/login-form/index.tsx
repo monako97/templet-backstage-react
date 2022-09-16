@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './index.less';
-import { useNavigate, useLocale, translatFunction, useDispatch } from 'plugin-runtime';
+import { useNavigate, useLocale, translatFunction, useDispatch } from 'PackageNameByCore';
 import { isEmail } from '@/utils';
 import Icon from '@/components/icon';
 import Email from '@/components/email';
 import InputPassword from '@/components/input-password';
-import type { ResponseBody } from 'plugin-runtime';
+import type { ResponseBody } from 'PackageNameByCore';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;

@@ -1,4 +1,4 @@
-import type { MockConfiguration } from 'plugin-runtime';
+import type { MockConfiguration } from 'PackageNameByMock';
 
 const conf: MockConfiguration = {
   'POST /api/upload_file': (req, res) => {

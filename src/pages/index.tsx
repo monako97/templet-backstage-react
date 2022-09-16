@@ -6,7 +6,7 @@ import {
   useDispatch,
   useSelector,
   shallowEqual,
-} from 'plugin-runtime';
+} from 'PackageNameByCore';
 import { ConfigProvider } from 'antd';
 import { pathToRegexp } from 'path-to-regexp';
 import MirrorPage from '@/components/load-micro';

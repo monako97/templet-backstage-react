@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector, useLocale } from 'plugin-runtime';
+import { useDispatch, useSelector, useLocale } from 'PackageNameByCore';
 import { Avatar, Badge, Dropdown, Layout, Menu } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
 import SwitchLanguage from '@/components/switch-language';

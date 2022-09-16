@@ -1,5 +1,5 @@
 {
-  "name": "plugin-back-stage-template",
+  "name": "template-back-stage",
   "version": "1.2.3",
   "description": "后台管理模版",
   "main": "index.js",
