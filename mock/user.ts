@@ -40,6 +40,4 @@ const conf: MockConfiguration = {
   },
 };
 
-module.exports = {
-  default: conf,
-};
+export default conf;
