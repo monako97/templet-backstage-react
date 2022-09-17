@@ -75,7 +75,7 @@ const routers = [
       {
         path: '*',
         element: React.createElement(Navigate, {
-          to: '/home',
+          to: '/home?menuId=home',
           replace: true,
         }),
       },

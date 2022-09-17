@@ -1,11 +1,6 @@
-import { request } from 'PackageNameByRequest';
+import { request } from '@/services';
+import type { ResponseBody } from '@/services';
 import type { UserInfo } from '@/models/account';
-
-interface LoginResponse {
-  status: number;
-  message: string;
-  result: UserInfo;
-}
 
 export type LoginByUserNameParams = {
   username: string;
@@ -16,22 +11,15 @@ export type LoginByEmailParams = {
   password: string;
 };
 
-export type ForgotPassWordParams = {
-  email: string;
-  password: string;
+export type ForgotPassWordParams = LoginByEmailParams & {
   verify_code: string;
 };
 
 // 用户名登录
-export const loginByUserName = async ({
-  username,
-  password,
-}: LoginByUserNameParams): Promise<LoginResponse> => {
-  return request('/api/login_by_username', {
-    data: {
-      username,
-      password,
-    },
+export const loginByUserName = async (
+  params: LoginByUserNameParams
+): Promise<ResponseBody<UserInfo>> =>
+  request('/api/login_by_username', {
+    data: params,
     method: 'POST',
   });
-};
