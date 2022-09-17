@@ -1,98 +1,18 @@
-#ico-sky,
-#ico-sky-out {
-  enable-background: new 0 0 43.882 9.475;
-
-  path {
-    animation-name: draw-in;
-    animation-duration: 2.5s;
-    animation-timing-function: ease;
-    animation-delay: 0;
-    animation-fill-mode: backwards;
-    fill: currentcolor;
-    stroke: currentcolor;
-    fill-opacity: 1;
-    stroke-opacity: 0;
-    stroke-width: 0.2;
-    stroke-dasharray: var(--stroke-dashoffset);
-
-    &:nth-child(1) {
-      --stroke-dashoffset: 39.2268;
-      animation-fill-mode: forwards;
-    }
-
-    &:nth-child(2) {
-      --stroke-dashoffset: 39.2444;
-      animation-delay: 0.5s;
-    }
-
-    &:nth-child(3) {
-      --stroke-dashoffset: 39.8630;
-      animation-delay: 1s;
-    }
-
-    &:nth-child(4) {
-      --stroke-dashoffset: 24.0558;
-      animation-delay: 1.5s;
-    }
-
-    &:nth-child(5) {
-      --stroke-dashoffset: 15.7114;
-      animation-delay: 2s;
-    }
-
-    &:nth-child(6) {
-      --stroke-dashoffset: 35.7490;
-      animation-delay: 2.5s;
-    }
-
-    &:nth-child(7) {
-      --stroke-dashoffset: 37.8176;
-      animation-delay: 3s;
-    }
-  }
+.logo {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
 }
 
-#ico-sky-out {
-  path {
-    animation-name: draw-exit;
-    fill-opacity: 0;
-  }
+.icon {
+  width: 32px;
+  height: 32px;
+  background: url("@{favicon}") no-repeat center center / contain;
+  margin-right: 8px;
 }
-@keyframes draw-exit {
-  0% {
-    stroke-dashoffset: var(--stroke-dashoffset);
-    fill-opacity: 1;
-    stroke-opacity: 0;
-  }
 
-  50% {
-    stroke-dashoffset: 0;
-    stroke-opacity: 1;
-    fill-opacity: 0;
-  }
-
-  100% {
-    fill-opacity: 0;
-    stroke-opacity: 0;
-    stroke-dashoffset: var(--stroke-dashoffset);
-  }
-}
-@keyframes draw-in {
-  0% {
-    fill-opacity: 0;
-    stroke-opacity: 0;
-    stroke-dashoffset: var(--stroke-dashoffset);
-  }
-
-  50% {
-    stroke-dashoffset: 0;
-    stroke-opacity: 1;
-    fill-opacity: 0;
-  }
-
-  100% {
-    stroke-dashoffset: var(--stroke-dashoffset);
-    fill-opacity: 1;
-    stroke-opacity: 0;
-  }
+.title {
+  font-weight: 500;
+  font-size: 16px;
 }

@@ -1,70 +1,93 @@
-import React, { useCallback, useEffect, useRef } from 'react';
-import { loadMicroApp, MicroApp } from 'qiankun';
-import { isEqual } from 'lodash';
-import { useNavigate, rootStore } from 'PackageNameByCore';
+import React, { useCallback, useEffect, useState } from 'react';
+import { addGlobalUncaughtErrorHandler, loadMicroApp } from 'qiankun';
+import type { MicroApp } from 'qiankun';
+
+// eslint-disable-next-line no-console
+addGlobalUncaughtErrorHandler((event) => console.log(event));
+
+type LoginAppProps = {
+  name?: string;
+  entry?: string;
+  active?: string;
+  basename?: string;
+};
 
 const microApps: Record<string, MicroApp> = {};
 
-const MirrorPage: React.FC<{
-  name: string;
-  entry: string;
-  basename?: string;
-}> = ({ name, entry, basename = '/', ...other }) => {
-  const el = useRef(null);
-  const navigate = useNavigate();
-  const targetTabs = useCallback(
-    (args: Record<string, string>) => {
-      const menuKV = rootStore.getState().appProgram.menuKV;
-      let menuId;
+const LoadMicroApp: React.FC<LoginAppProps> = ({
+  name,
+  entry,
+  basename = '/',
+  active = '',
+  ...other
+}) => {
+  const [apps, setApps] = useState<string[]>(name ? [name] : []);
 
-      Object.keys(menuKV).forEach((k) => {
-        if (menuKV[k].menuCode === args.menuCode) {
-          menuId = menuKV[k].key;
-        }
-      });
-      navigate(`${args.url}${menuId ? '?menuId=' + menuId : ''}`);
-    },
-    [navigate]
-  );
+  useEffect(() => {
+    if (name && !apps.includes(name)) {
+      setApps([...apps, name]);
+    }
+  }, [name, apps]);
+
   const load = useCallback(async () => {
+    if (!name || !entry) return;
+    const loginContainer = document.getElementById(`${name}-micro-app`);
+
+    if (!loginContainer) return;
+
     if (microApps[name]?.getStatus() === 'MOUNTED') {
       await microApps[name]?.unmount();
     }
-    microApps[name] = loadMicroApp(
-      {
-        name: name,
-        entry: entry,
-        container: el.current as unknown as HTMLElement,
-        props: {
-          basename,
-          ...other,
-          PROJECTNAME: process.env.PROJECTNAME,
-          __MicroAppEntry__: window.__MicroAppEntry__,
-          currentTarget: window,
-          targetTabs: targetTabs,
+    Object.assign(microApps, {
+      [name]: loadMicroApp(
+        {
+          name: name,
+          entry: entry + active,
+          container: loginContainer,
+          props: {
+            basename,
+            ...other,
+            PROJECTNAME: process.env.PROJECTNAME,
+            __MicroAppEntry__: window.__MicroAppEntry__,
+            currentTarget: window,
+            getPopupContainer: () => document.querySelector('#root section') || document.body,
+            getTargetContainer: () => document.querySelector('#root section') || document.body,
+          },
         },
-      },
-      {
-        singular: false,
-        prefetch: true,
-        autoStart: true,
-        fetch(url: RequestInfo, init?: RequestInit) {
-          return window.fetch(url, {
-            ...init,
-            mode: 'cors',
-          });
-        },
-      }
-    );
-  }, [basename, entry, name, other, targetTabs]);
+        {
+          singular: false,
+          prefetch: true,
+          autoStart: true,
+          fetch(url: RequestInfo | URL, init?: RequestInit) {
+            return window.fetch(url, {
+              ...init,
+              mode: 'cors',
+            });
+          },
+        }
+      ),
+    });
+  }, [active, basename, entry, name, other]);
 
   useEffect(() => {
     load();
   }, [load]);
 
-  return <div ref={el} />;
+  return (
+    <React.Fragment>
+      {apps.map((app) => {
+        return (
+          <div
+            key={app}
+            id={`${app}-micro-app`}
+            style={{
+              display: app === name ? 'block' : 'none',
+            }}
+          />
+        );
+      })}
+    </React.Fragment>
+  );
 };
 
-const LoadMicro = React.memo(MirrorPage, isEqual);
-
-export default LoadMicro;
+export default LoadMicroApp;

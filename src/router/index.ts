@@ -26,6 +26,7 @@ const routers = [
       },
       {
         path: 'home',
+        closable: false,
         icon: React.createElement(Icon, { type: 'home-nav' }),
       },
       {
