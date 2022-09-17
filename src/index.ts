@@ -3,10 +3,6 @@ import { isFunction, isEqual } from 'lodash';
 import { initGlobalState } from 'qiankun';
 import type { MicroAppStateActions } from 'qiankun';
 
-if (process.env.PROJECTNAME) {
-  document.title = process.env.PROJECTNAME;
-}
-
 dispatch({
   type: 'menu/init',
   payload: null,
