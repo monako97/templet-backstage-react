@@ -19,7 +19,7 @@ export type ForgotPassWordParams = LoginByEmailParams & {
 export const loginByUserName = async (
   params: LoginByUserNameParams
 ): Promise<ResponseBody<UserInfo>> =>
-  request('/api/login_by_username', {
+  request('/login_by_username', {
     data: params,
     method: 'POST',
   });
