@@ -10,7 +10,8 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
-    "antd": "4.20.2",
+    "antd": "5.3.1",
+    "neko-ui": "1.0.36",
     "qiankun": "2.7.0"
   },
   "resolutions": {

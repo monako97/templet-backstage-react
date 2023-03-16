@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Link, localizable, translatFunction } 'PackageNameByCore';
+import { Link, localizable, translatFunction } from 'PackageNameByCore';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './index.less';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
