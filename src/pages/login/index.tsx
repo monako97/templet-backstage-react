@@ -1,51 +1,92 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
+import { css, injectGlobal } from '@emotion/css';
+import { localizable } from 'PackageNameByCore';
 import { Tabs } from 'antd';
-import LoginForm from '@/components/login-form';
-import { useLocale } from 'PackageNameByCore';
-import styles from './index.less';
 import Icon from '@/components/icon';
+import LayoutFooter from '@/components/layout-footer';
+import LoginForm, { type LoginType } from '@/components/login-form';
+import SwitchLanguage from '@/components/switch-language';
 
-const { TabPane } = Tabs;
+const styles = css`
+  .login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+  }
 
-type TabType = {
-  label: string;
-  type: 'username' | 'email';
-  icon: string;
-};
-type LoginType = 'username' | 'email';
+  .login-tabs {
+    width: 100%;
+  }
 
+  .login-box {
+    min-width: 288px;
+  }
+
+  .login-title {
+    margin-bottom: 32px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .login-toolbox {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+  }
+`;
+
+injectGlobal([styles]);
+
+const tabs = [
+  { label: 'sign-in-username', type: 'username', icon: 'personal-nav' },
+  { label: 'sign-in-email', type: 'email', icon: 'email' },
+];
 const Login: React.FC = () => {
-  const { getLanguage } = useLocale();
-  const tabs: TabType[] = [
-    { label: getLanguage('sign-in-username'), type: 'username', icon: 'personal-nav' },
-    { label: getLanguage('sign-in-email'), type: 'email', icon: 'email' },
-  ];
+  const { t } = localizable;
   const [type, setType] = useState<LoginType>('username');
+  const items = useMemo(
+    () =>
+      tabs.map((item) => ({
+        label: (
+          <span>
+            <Icon type={item.icon} />
+            {t[item.label]}
+          </span>
+        ),
+        destroyInactiveTabPane: true,
+        key: item.type,
+      })),
+    [t]
+  );
   const handleTypeChange = useCallback((key: string) => {
     setType(key as LoginType);
   }, []);
 
   return (
-    <div className={styles.login}>
-      <p className={styles.title}>{getLanguage('route-login')}</p>
-      <Tabs activeKey={type} onChange={handleTypeChange} centered>
-        {tabs.map((item) => {
-          return (
-            <TabPane
-              tab={
-                <span>
-                  <Icon type={item.icon} />
-                  {item.label}
-                </span>
-              }
-              destroyInactiveTabPane
-              key={item.type}
-            />
-          );
-        })}
-      </Tabs>
-      <LoginForm type={type} />
-    </div>
+    <>
+      <div className="login-toolbox">
+        <SwitchLanguage />
+      </div>
+      <div className="login-page">
+        <p className="login-title">{t['route-login']}</p>
+        <div className="login-box">
+          <Tabs
+            className="login-tabs"
+            activeKey={type}
+            centered
+            items={items}
+            onChange={handleTypeChange}
+          />
+          <LoginForm type={type} />
+        </div>
+      </div>
+      <LayoutFooter />
+    </>
   );
 };
 

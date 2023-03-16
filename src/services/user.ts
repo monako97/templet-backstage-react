@@ -1,6 +1,5 @@
-import { request } from '@/services';
-import type { ResponseBody } from '@/services';
-import type { UserInfo } from '@/models/account';
+import { request, type ResponseBody } from '@/services';
+import { type UserInfo } from '@/store';
 
 export type LoginByUserNameParams = {
   username: string;
@@ -16,10 +15,23 @@ export type ForgotPassWordParams = LoginByEmailParams & {
 };
 
 // 用户名登录
-export const loginByUserName = async (
-  params: LoginByUserNameParams
-): Promise<ResponseBody<UserInfo>> =>
-  request('/login_by_username', {
+export const loginByUserName = async (params: LoginByUserNameParams) =>
+  request<ResponseBody<UserInfo>>('/login_by_username', {
     data: params,
     method: 'POST',
   });
+// email登录
+export const loginByEmail = async (params: LoginByEmailParams) =>
+  request<ResponseBody<UserInfo>>('/login_by_email', {
+    data: params,
+    method: 'POST',
+  });
+// 找回密码
+export const forgetPassword = async (params: LoginByEmailParams) =>
+  request<ResponseBody<boolean>>('/forget-password', {
+    data: params,
+    method: 'POST',
+  });
+// 获取验证码
+export const getForgetVerifyCode = async (data: Record<string, string>) =>
+  request<ResponseBody<boolean>>('/forget-verify-code', { data });

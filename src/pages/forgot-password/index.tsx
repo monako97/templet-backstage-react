@@ -1,71 +1,54 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react';
-import { useNavigate, useDispatch, useLocale, translatFunction } from 'PackageNameByCore';
-import type { ResponseBody } from 'PackageNameByCore';
+import { localizable, translatFunction } from 'PackageNameByCore';
 import { Button, Form, Input, message } from 'antd';
-import Email from '@/components/email';
+import styles from './index.less';
+import Email, { isEmail } from '@/components/email';
 import Icon from '@/components/icon';
 import InputPassword from '@/components/input-password';
-import styles from './index.less';
-import { PASSWORD_RegExp, isEmail } from '@/utils';
 import { ForgotPassWordParams } from '@/services/user';
+import { account } from '@/store';
+
+const PASSWORD_RegExp = /^(\w){6,16}$/;
 const { Item } = Form;
 
 let getVCTimer: number | null,
   second = 60;
 const ForgotPassword: React.FC = () => {
-  const dispatch = useDispatch();
-  const { getLanguage } = useLocale();
-  const navigate = useNavigate();
+  const { t } = localizable;
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [vcLoading, setVCLoading] = useState(false);
   const [getVC, setGetVC] = useState(false);
   const [percent, setPercent] = useState<number>(100);
 
-  const onFinish = useCallback(
-    (values: ForgotPassWordParams) => {
-      setLoading(true);
-      dispatch({
-        type: 'account/fetchForgetPassword',
-        payload: {
-          data: values,
-          success(resp: ResponseBody) {
-            message.success(resp.message);
-            setLoading(false);
-            dispatch({
-              type: 'account/fetchLogout',
-            });
-            navigate('/login');
-          },
-          failure(errMsg: string) {
-            message.error(errMsg);
-            setLoading(false);
-            setGetVC(false);
-          },
-        },
-      });
-    },
-    [dispatch, navigate]
-  );
+  const onFinish = useCallback((values: ForgotPassWordParams) => {
+    setLoading(true);
+    account.forgetPassword(values, (resp) => {
+      if (resp.success) {
+        message.success(resp.message);
+        setLoading(false);
+        account.logout();
+      } else {
+        message.error(resp.message);
+        setLoading(false);
+        setGetVC(false);
+      }
+    });
+  }, []);
 
   const getVerifyCode = useCallback(() => {
     setVCLoading(true);
-    dispatch({
-      type: 'account/fetchForgetVerifyCode',
-      payload: {
-        data: form.getFieldsValue(),
-        success(resp: ResponseBody) {
-          message.success(resp.message);
-          setVCLoading(false);
-          setGetVC(true);
-        },
-        failure(errMsg: string) {
-          message.error(errMsg);
-          setVCLoading(false);
-        },
-      },
+    account.fetchForgetVerifyCode(form.getFieldsValue(), (resp) => {
+      if (resp.success) {
+        message.success(resp.message);
+        setVCLoading(false);
+        setGetVC(true);
+      } else {
+        message.error(resp.message);
+        setVCLoading(false);
+      }
     });
-  }, [dispatch, form]);
+  }, [form]);
 
   useEffect(() => {
     second = 60;
@@ -97,14 +80,14 @@ const ForgotPassword: React.FC = () => {
 
   const getVCText = useCallback(
     (num = 0): ReactNode => {
-      return translatFunction(getLanguage('get-verify-code-time'), Math.ceil((num / 100) * 60));
+      return translatFunction(t['get-verify-code-time'] as string, Math.ceil((num / 100) * 60));
     },
-    [getLanguage]
+    [t]
   );
 
   return (
     <div className={styles.forgot}>
-      <p className={styles.title}>{getLanguage('route-forgot-password')}</p>
+      <p className={styles.title}>{t['route-forgot-password']}</p>
       <Form
         name="forgot"
         form={form}
@@ -116,7 +99,7 @@ const ForgotPassword: React.FC = () => {
       >
         <Item
           name="email"
-          label={getLanguage('email')}
+          label={t.email}
           rules={[
             { required: true },
             () => ({
@@ -124,24 +107,20 @@ const ForgotPassword: React.FC = () => {
                 if (isEmail(value)) {
                   return Promise.resolve();
                 }
-                return Promise.reject(getLanguage('ph:validator-email'));
+                return Promise.reject(t['ph:validator-email']);
               },
             }),
           ]}
           hasFeedback
         >
-          <Email placeholder={getLanguage('ph:email')} />
+          <Email placeholder={t['ph:email']} />
         </Item>
         <Item shouldUpdate={true}>
           {() => (
-            <Item
-              label={getLanguage('verify-code')}
-              name="verify_code"
-              rules={[{ required: true }]}
-            >
+            <Item label={t['verify-code']} name="verify_code" rules={[{ required: true }]}>
               <Input
                 prefix={<Icon type="verification" />}
-                placeholder={getLanguage('verify-code')}
+                placeholder={t['verify-code']}
                 disabled={!isEmail(form.getFieldValue('email'))}
                 addonAfter={
                   <Button
@@ -149,7 +128,7 @@ const ForgotPassword: React.FC = () => {
                     loading={vcLoading}
                     disabled={!isEmail(form.getFieldValue('email')) || getVC}
                   >
-                    {getVC ? getVCText(percent) : getLanguage('get-verify-code')}
+                    {getVC ? getVCText(percent) : t['get-verify-code']}
                   </Button>
                 }
               />
@@ -157,15 +136,15 @@ const ForgotPassword: React.FC = () => {
           )}
         </Item>
         <Item
-          label={getLanguage('new-password')}
+          label={t['new-password']}
           name="password"
           rules={[{ required: true, pattern: PASSWORD_RegExp }]}
         >
-          <InputPassword placeholder={getLanguage('new-password')} />
+          <InputPassword placeholder={t['new-password']} />
         </Item>
         <Item>
           <Button type="primary" htmlType="submit" className={styles.submit} loading={loading}>
-            {getLanguage('route-password')}
+            {t['route-password']}
           </Button>
         </Item>
       </Form>

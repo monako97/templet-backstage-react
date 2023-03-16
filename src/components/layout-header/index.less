@@ -1,99 +1,42 @@
-.bg-white {
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
-  padding: 0 !important;
-  color: @text-color !important;
-  background: @layout-header-bg !important;
   border-radius: 0;
-  box-shadow: var(--box-shadow-lite);
-  transition-timing-function: @transition-timing-function;
-  transition-duration: @transition-duration;
-  transition-property: background-color, color, box-shadow;
-  :global(.@{ant-prefix}-badge) {
-    :global(.@{ant-prefix}-avatar) {
-      vertical-align: middle;
-      background-color: rgb(120 88 255 / 50%);
-    }
-  }
+  padding: 0 24px !important;
+  background-color: rgb(255 255 255 / 80%);
+  backdrop-filter: blur(16px);
 }
 
 .right {
   display: flex;
-  flex: 1;
-  align-items: center;
   justify-content: flex-end;
-  margin-right: 24px;
-  :global(.@{ant-prefix}-btn > .@{iconfont-css-prefix}) {
-    width: 30px;
-    height: 20px;
-  }
-
-  > button,
-  > div {
-    margin-right: 16px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
+  align-items: center;
+  gap: 16px;
+  flex: 1;
 }
 
 .user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   cursor: pointer;
 }
 
 .username {
-  font-weight: 600;
   font-size: 16px;
+  font-weight: 600;
 }
 
 .trigger {
-  display: flex;
-  align-items: center;
-  margin-left: 24px;
   font-size: 18px;
-  line-height: 64px;
   cursor: pointer;
   transition: none;
-
-  &:hover {
-    color: var(--primary-6);
-  }
 }
 
-.tooltip {
-  max-width: max-content;
-  padding: 0;
-  :global(.@{ant-prefix}-tooltip-inner) {
-    padding: 0 !important;
-    box-shadow: none;
-  }
-}
-
-@media only screen and (max-width: 414px) {
-  .trigger {
-    margin-left: 16px;
-    line-height: 50px;
-  }
-
-  .username {
-    display: none;
-  }
-
-  .weather {
-    transform: scale(0.7813);
-  }
-
-  .right {
-    margin-right: 16px;
-
-    > button,
-    > div {
-      margin-right: 8px;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
+.lang {
+  display: block;
+  line-height: 64px;
 }

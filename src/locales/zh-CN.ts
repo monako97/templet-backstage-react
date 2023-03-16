@@ -1,28 +1,16 @@
-import type { LocalesConfType } from 'PackageNameByCore';
+import type { LocaleConfig } from 'PackageNameByCore';
 
-const zhCN: LocalesConfType = {
-  namespace: 'zh_CN',
+const zhCN: LocaleConfig = {
+  language: 'zh_CN',
   title: '简体中文',
   translation: {
     'route-home': '主页',
     'route-password': '修改密码',
     'route-forgot-password': '忘记密码',
     'route-login': '登录',
-    'route-dynamic': '动态路由',
-    'route-dynamic/:id': '动态路由-ID',
-    'route-dynamic/:id/:name': '动态路由-ID-Name',
-    'route-home/dynamic/:id': '主页-动态路由-ID',
-    'route-home/dynamic/:id/:name': '主页-动态路由-ID-Name',
-    'route-home/dynamic': '主页-子页面',
-    'route-micro': '微应用',
-    'route-micro/dynamic': '微应用: 动态路由',
-    'route-micro/dynamic/:id': '微应用: 动态路由-ID',
-    'route-micro/dynamic/:id/:name': '微应用: 动态路由-ID-Name',
-    'route-micro/home': '微应用: 主页',
-    'route-micro/home/dynamic': '微应用: 主页-动态路由',
-    'route-micro/home/dynamic/:id': '微应用: 主页-动态路由-ID',
-    'route-micro/home/dynamic/:id/:name': '微应用: 主页-动态路由-ID-Name',
-    'sub-page-view': '子路由页面',
+    'route-app-one': '微应用1',
+    'route-app-one/dynamic/:id': '微应用1: 动态路由-ID',
+    'route-app-one/home': '微应用1: 主页',
     jump: '跳转',
     about: '关于',
     unknown: '未知',

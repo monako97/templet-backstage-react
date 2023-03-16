@@ -1,17 +1,11 @@
-import * as React from 'react';
-import { ConfigProvider, Skeleton } from 'antd';
-import { projectBasicInfo, useOutlet } from 'PackageNameByCore';
+import React from 'react';
+import { useOutlet } from 'PackageNameByCore';
+import { Skeleton } from 'antd';
 
 const Fallback = () => {
   const outlet = useOutlet();
 
-  return outlet?.props.children ? (
-    outlet?.props.children
-  ) : (
-    <ConfigProvider {...projectBasicInfo.providerConfig}>
-      <Skeleton active />
-    </ConfigProvider>
-  );
+  return outlet?.props.children ? outlet?.props.children : <Skeleton title active />;
 };
 
 export default Fallback;

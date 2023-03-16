@@ -1,44 +1,36 @@
 import React, { useCallback, useState } from 'react';
+import { Link, localizable, translatFunction } 'PackageNameByCore';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './index.less';
-import { useNavigate, useLocale, translatFunction, useDispatch } from 'PackageNameByCore';
-import { isEmail } from '@/utils';
-import Icon from '@/components/icon';
-import Email from '@/components/email';
-import InputPassword from '@/components/input-password';
-import type { ResponseBody } from 'PackageNameByCore';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
+import Email, { isEmail } from '@/components/email';
+import Icon from '@/components/icon';
+import InputPassword from '@/components/input-password';
+import { account } from '@/store';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;
 
-interface LoginFormProps {
-  type: 'email' | 'username';
+export type LoginType = 'email' | 'username';
+
+export interface LoginFormProps {
+  type: LoginType;
 }
+
 const { Item } = Form;
 
 const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
-  const dispatch = useDispatch();
-  const { getLanguage } = useLocale();
-  const navigate = useNavigate();
+  const { t } = localizable;
   const [loading, setLoading] = useState(false);
   const onFinish = useCallback(
     (data: LoginByUserNameParams | LoginByEmailParams) => {
       setLoading(true);
-      dispatch({
-        type: 'account/login',
-        payload: {
-          type,
-          data,
-          callback(resp: ResponseBody) {
-            setLoading(false);
-            if (resp.success) {
-              navigate('/home?menuId=home');
-            }
-          },
-        },
-      });
+      if (type === 'email') {
+        account.loginEmail(data as LoginByEmailParams, () => setLoading(false));
+      } else {
+        account.loginUsername(data as LoginByUserNameParams, () => setLoading(false));
+      }
     },
-    [dispatch, navigate, type]
+    [type]
   );
 
   return (
@@ -54,7 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
       {type === 'username' && (
         <Item
           name="username"
-          label={getLanguage('username')}
+          label={t.username}
           rules={[
             { required: true },
             () => ({
@@ -62,19 +54,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
                 if (USERNAME_RegExp.test(value)) {
                   return Promise.resolve();
                 }
-                return Promise.reject(translatFunction(getLanguage('ph:len-range'), '4-10'));
+                return Promise.reject(translatFunction(t['ph:len-range'], '4-10'));
               },
             }),
           ]}
           hasFeedback
         >
-          <Input prefix={<Icon type="username" />} placeholder={getLanguage('ph:username')} />
+          <Input prefix={<Icon type="username" />} placeholder={t['ph:username']} />
         </Item>
       )}
       {type === 'email' && (
         <Item
           name="email"
-          label={getLanguage('email')}
+          label={t.email}
           rules={[
             { required: true },
             () => ({
@@ -82,49 +74,35 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
                 if (isEmail(value)) {
                   return Promise.resolve();
                 }
-                return Promise.reject(getLanguage('ph:validator-email'));
+                return Promise.reject(t['ph:validator-email']);
               },
             }),
           ]}
           hasFeedback
         >
-          <Email placeholder={getLanguage('ph:email')} />
+          <Email placeholder={t['ph:email']} />
         </Item>
       )}
-      <Item
-        name="password"
-        label={getLanguage('password')}
-        rules={[{ required: true }]}
-        hasFeedback
-      >
+      <Item name="password" label={t.password} rules={[{ required: true }]} hasFeedback>
         <InputPassword />
       </Item>
       <Item>
         <Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>{getLanguage('remember')}</Checkbox>
+          <Checkbox>{t.remember}</Checkbox>
         </Item>
-        <Button
-          className={styles.loginFormForgot}
-          type="link"
-          onClick={() => {
-            navigate('/forgot-password');
-          }}
-        >
-          {getLanguage('route-forgot-password')}
-        </Button>
+        <Link className={styles.loginFormForgot} to="/forgot-password">
+          {t['route-forgot-password']}
+        </Link>
       </Item>
-
-      <Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className={styles.loginFormButton}
-          loading={loading}
-          icon={<Icon type="login" />}
-        >
-          {getLanguage('sign-in')}
-        </Button>
-      </Item>
+      <Button
+        type="primary"
+        htmlType="submit"
+        className={styles.loginFormButton}
+        loading={loading}
+        icon={<Icon type="login" />}
+      >
+        {t['sign-in']}
+      </Button>
     </Form>
   );
 };

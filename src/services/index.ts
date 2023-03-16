@@ -1,7 +1,5 @@
-import { extend } from 'PackageNameByRequest';
-import type { ResponseBody } from 'PackageNameByRequest';
-export { request } from 'PackageNameByRequest';
-export type { ResponseBody } from 'PackageNameByRequest';
+import { extend, type ResponseBody } from 'PackageNameByRequest';
+export { request, type ResponseBody } from 'PackageNameByRequest';
 
 extend({
   interceptor: {

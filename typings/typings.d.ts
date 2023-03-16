@@ -9,19 +9,11 @@ declare module './index.less' {
   export default styles;
 }
 
-declare module 'moment' {
-  import { Dayjs } from 'dayjs';
-  namespace moment {
-    type Moment = Dayjs;
-  }
-  export = moment;
-  export as namespace moment;
-}
-
 type MicrrorAppConf = {
   desc: string;
   name: string;
   url: string;
+  basename: string;
   activeRule: string[];
 };
 
@@ -33,18 +25,6 @@ interface Window {
     render(children: React.ReactChild | Iterable<React.ReactNode>): void;
     unmount(): void;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  primaryApp?: Record<string, any>;
 }
-
-interface PureComponentProps {
-  path: string;
-  selfUrl: string;
-}
-
-declare const layoutSider:
-  | false
-  | {
-      theme?: 'light' | 'dark';
-      breakpoint?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
-    };
-
-declare const projectName: string;

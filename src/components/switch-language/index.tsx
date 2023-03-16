@@ -1,44 +1,40 @@
 import React, { useMemo } from 'react';
-import { useLocale, locales } from 'PackageNameByCore';
-import { Button, Dropdown, Menu } from 'antd';
+import { classNames } from 'PackageNameByCommon';
+import { localizable } from 'PackageNameByCore';
+import { Dropdown, Typography, type MenuProps } from 'antd';
 import styles from './index.less';
 import Icon from '../icon';
-import { ItemType } from 'antd/es/menu/hooks/useItems';
 
 interface SwitchLanguageProps {
   className?: string;
 }
 const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLanguageProps) => {
-  const { switchLanguage, getLocal, lang } = useLocale();
+  const { set, language, locales } = localizable;
 
-  const items = useMemo(
+  const items = useMemo<MenuProps['items']>(
     () =>
-      locales.map((item) => {
+      locales.map((item, i) => {
         return {
+          key: `${item.language}-${i}`,
           label: (
             <div className={styles.label}>
               {item.title}
-              <span>{item.namespace}</span>
+              <span>{item.language}</span>
             </div>
           ),
-          icon: <Icon type={item.namespace} />,
-          onClick: () => switchLanguage(item.namespace),
-          // eslint-disable-next-line no-undefined
-          className: item.namespace === lang ? styles.selectedItem : undefined,
+          icon: <Icon type={item.language} />,
+          onClick: () => set(item.language),
+          className: classNames(item.language === language && styles.selectedItem),
         };
-      }) as unknown as ItemType[],
-    [lang, switchLanguage]
+      }),
+    [language, locales, set]
   );
 
   return (
-    <Dropdown
-      overlay={<Menu items={items} />}
-      placement="bottom"
-      overlayClassName={styles.switchLang}
-    >
-      <Button className={`flex f-a-c ${styles.btn} ${className ? className : ''}`} type="text">
-        <Icon type={getLocal().namespace} />
-      </Button>
+    <Dropdown overlayClassName={styles.switchLang} menu={{ items }}>
+      <Typography.Text className={`${styles.btn} ${className ? className : ''}`}>
+        <Icon type={language} />
+      </Typography.Text>
     </Dropdown>
   );
 };

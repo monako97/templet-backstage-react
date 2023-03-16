@@ -1,6 +1,5 @@
-import React from 'react';
-import { Navigate } from 'PackageNameByCore';
-import type { RouterProps } from 'PackageNameByCore';
+import { createElement } from 'react';
+import { Navigate, type RouterProps } from 'PackageNameByCore';
 import Icon from '@/components/icon';
 
 const routers = [
@@ -19,65 +18,48 @@ const routers = [
       {
         path: '*',
         onlyLogin: true,
-        element: React.createElement(Navigate, {
+        element: Navigate,
+        props: {
           to: '/login',
           replace: true,
-        }),
+        },
       },
       {
         path: 'home',
         closable: false,
-        icon: React.createElement(Icon, { type: 'home-nav' }),
+        icon: createElement(Icon, { type: 'home-nav' }),
       },
       {
-        path: 'dynamic',
-        hideMenu: true,
-      },
-      {
-        path: 'micro',
-        icon: React.createElement(Icon, { type: 'about' }),
+        path: 'app-one',
+        icon: createElement(Icon, { type: 'about' }),
         children: [
           {
             path: 'home',
-            children: [
-              {
-                path: 'dynamic',
-                hideMenu: true,
-                children: [
-                  {
-                    path: ':id',
-                    children: [
-                      {
-                        path: ':name',
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
           },
           {
-            path: 'dynamic',
-            hideMenu: true,
-            children: [
-              {
-                path: ':id',
-                children: [
-                  {
-                    path: ':name',
-                  },
-                ],
-              },
-            ],
+            path: 'dynamic/:id',
           },
         ],
       },
       {
-        path: '*',
-        element: React.createElement(Navigate, {
+        path: 'refresh',
+        hideTabs: true,
+        hideMenu: true,
+        element: Navigate,
+        props: {
+          to: -1,
+          replace: true,
+        },
+      },
+      {
+        path: 'login',
+        hideTabs: true,
+        hideMenu: true,
+        element: Navigate,
+        props: {
           to: '/home?menuId=home',
           replace: true,
-        }),
+        },
       },
     ],
   },

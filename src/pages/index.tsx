@@ -1,104 +1,89 @@
 import React, { useEffect, useMemo, useCallback, useRef } from 'react';
 import {
+  type MenuItem,
+  DashboardLayout,
   useOutlet,
-  projectBasicInfo,
   useLocation,
-  useDispatch,
-  useSelector,
-  shallowEqual,
+  redirect,
+  projectBasicInfo,
+  pathToRegexp,
 } from 'PackageNameByCore';
-import { ConfigProvider } from 'antd';
-import { pathToRegexp } from 'path-to-regexp';
 import LoadMicro from '@/components/load-micro';
-import type { ConfigProviderProps } from 'antd/es/config-provider';
-import 'PackageNameByCore/lib/styles/ant.variables.global.less';
+import { global, menu } from '@/store';
 
-type CurrentMicroType =
-  | {
-      name: string;
-      url: string;
-    }
-  | undefined;
-
-const providerConfig: ConfigProviderProps = {
-  ...projectBasicInfo.providerConfig,
-  form: {
-    validateMessages: {
-      required: '${label}是必填字段',
-    },
-  },
-};
-const appRule = window.__MicroAppActiveRule__;
+const appRule = window.__MicroAppActiveRule__.map((item) => {
+  return {
+    ...item,
+    activeRule: item.activeRule.map((r) => `${item.basename}${r}`),
+  };
+});
 const allMicrror: string[] = appRule.map((item) => item.activeRule).flat();
-
-ConfigProvider.config(providerConfig);
-
-const App = () => {
-  const dispatch = useDispatch();
-  const outlet = useOutlet();
+const useMicroApp = () => {
+  const hash = projectBasicInfo.programInfo.routerMode === 'hash' ? '/#' : '';
   const location = useLocation();
-  const isLogin = useSelector((store: AppStore) => !!store.account.info, shallowEqual);
-
-  const tab = useSelector(
-    ({ appProgram }: AppStore) =>
-      appProgram.activeKey ? appProgram.menuKV[appProgram.activeKey] : null,
-    shallowEqual
-  );
-  const currentTab = useRef<ItemTypes>(tab);
-
-  useEffect(() => {
-    Object.assign(currentTab, {
-      current: tab,
-    });
-  }, [tab]);
-  useEffect(() => {
-    document.getElementById('root')?.scrollTo({ top: 0 });
-  }, [location.pathname]);
-
   const isMicro = useCallback(() => {
     const pathname = location.pathname;
     const p = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
-    const cp = allMicrror.find((e) => pathToRegexp(e).exec('/#' + p));
+    const cp = allMicrror.find((e) => pathToRegexp(e).exec(hash + p));
 
     return cp;
-  }, [location.pathname]);
-
+  }, [hash, location.pathname]);
   const active = useMemo(() => isMicro(), [isMicro]);
-
-  const currentMicro: CurrentMicroType = useMemo(() => {
-    return active ? appRule.find((m) => m.activeRule.includes(active)) : ({} as CurrentMicroType);
+  const currentMicro = useMemo(() => {
+    return active ? appRule.find((m) => m.activeRule.includes(active)) : null;
   }, [active]);
 
-  useEffect(() => {
-    if (isLogin) {
-      // 请求初始数据
-      dispatch({
-        type: 'menu/fetch',
-        payload: {
-          callback: () => {
-            // if (!currentTab.current) {
-            //   navigate('/home?menuId=home');
-            // }
-          },
-        },
-      });
-    } else {
-      dispatch({
-        type: 'menu/init',
-      });
-    }
-  }, [dispatch, isLogin]);
-
-  return (
-    <React.Fragment>
-      {outlet}
+  return {
+    current: currentMicro,
+    microView: (
       <LoadMicro
         name={currentMicro?.name}
         entry={currentMicro?.url}
-        active={active?.substring(3)}
+        basename={currentMicro?.basename}
+        active={active?.substring(hash.length + 1)}
       />
-    </React.Fragment>
+    ),
+  };
+};
+
+const App = () => {
+  const { kv, activeKey } = menu;
+  const { isLogin } = global;
+  const currentMenu = useMemo(() => (activeKey ? kv[activeKey] : null), [kv, activeKey]);
+  const outlet = useOutlet();
+  const location = useLocation();
+  const { current, microView } = useMicroApp();
+  const menuRef = useRef<MenuItem>(currentMenu);
+
+  useEffect(() => {
+    Object.assign(menuRef, {
+      current: currentMenu,
+    });
+  }, [currentMenu]);
+  useEffect(() => {
+    document.getElementById('root')?.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+  useEffect(() => {
+    if (isLogin) {
+      // 请求初始数据
+      global.fetchMenu(() => {
+        // 在没有权限的路由时返回首页
+        if (!menuRef.current) {
+          redirect('/home?menuId=home');
+        }
+      });
+    } else {
+      menu.setMenu([]);
+    }
+  }, [isLogin]);
+  const view = (
+    <>
+      {current ? null : outlet}
+      {microView}
+    </>
   );
+
+  return isLogin ? <DashboardLayout>{view}</DashboardLayout> : view;
 };
 
 export default App;

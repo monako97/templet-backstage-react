@@ -1,19 +1,18 @@
 import React from 'react';
-import { useLocale, useSelector, shallowEqual } from 'PackageNameByCore';
+import { localizable } from 'PackageNameByCore';
 import styles from './index.less';
-import type { UserModelType } from '@/models/account';
+import { account } from '@/store';
 
 const Home: React.FC = () => {
-  const { getLanguage } = useLocale();
-  const userInfo = useSelector((state: { account: UserModelType }) => state.account, shallowEqual);
+  const { t } = localizable;
 
   return (
     <React.Fragment>
       <div className={styles.details}>
         <details>
-          <summary>{getLanguage('user-info')}</summary>
+          <summary>{t['user-info']}</summary>
           <pre>
-            <code>{JSON.stringify(userInfo, null, 4)}</code>
+            <code>{JSON.stringify(account.info, null, 4)}</code>
           </pre>
         </details>
         <details>

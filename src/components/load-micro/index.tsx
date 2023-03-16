@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { addGlobalUncaughtErrorHandler, loadMicroApp } from 'qiankun';
-import type { MicroApp } from 'qiankun';
+import { localizable } from 'PackageNameByCore';
+import { addGlobalUncaughtErrorHandler, loadMicroApp, type MicroApp } from 'qiankun';
 
 // eslint-disable-next-line no-console
 addGlobalUncaughtErrorHandler((event) => console.log(event));
@@ -21,7 +21,8 @@ const LoadMicroApp: React.FC<LoginAppProps> = ({
   active = '',
   ...other
 }) => {
-  const [apps, setApps] = useState<string[]>(name ? [name] : []);
+  const { language } = localizable;
+  const [apps, setApps] = useState(name ? [name] : []);
 
   useEffect(() => {
     if (name && !apps.includes(name)) {
@@ -46,6 +47,7 @@ const LoadMicroApp: React.FC<LoginAppProps> = ({
           container: loginContainer,
           props: {
             basename,
+            language: language,
             ...other,
             PROJECTNAME: process.env.PROJECTNAME,
             __MicroAppEntry__: window.__MicroAppEntry__,
@@ -67,7 +69,7 @@ const LoadMicroApp: React.FC<LoginAppProps> = ({
         }
       ),
     });
-  }, [active, basename, entry, name, other]);
+  }, [active, basename, entry, language, name, other]);
 
   useEffect(() => {
     load();

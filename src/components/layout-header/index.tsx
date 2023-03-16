@@ -1,57 +1,49 @@
-import React, { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector, useLocale } from 'PackageNameByCore';
-import { Avatar, Badge, Dropdown, Layout, Menu } from 'antd';
+import React, { createElement, type FC, useMemo } from 'react';
 import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
-import SwitchLanguage from '@/components/switch-language';
-import { isEqual, isFunction } from 'lodash';
-import type { UserModelType } from '@/models/account';
+import { isFunction } from 'PackageNameByCommon';
+import { localizable } from 'PackageNameByCore';
+import { Avatar, Badge, Dropdown, Layout, type MenuProps } from 'antd';
 import styles from './index.less';
-import { ItemType } from 'antd/es/menu/hooks/useItems';
+import SwitchLanguage from '@/components/switch-language';
+import { account } from '@/store';
 
 interface HeaderProps {
   collapsed: boolean;
   // eslint-disable-next-line no-unused-vars
-  onCollapsed?: (value?: boolean | undefined) => void;
+  onCollapsed?: (value?: boolean) => void;
 }
 
-const LayoutHeader: React.FC<HeaderProps> = (props: HeaderProps) => {
-  const { collapsed, onCollapsed } = props;
-  const userInfo = useSelector((state: { account: UserModelType }) => state.account.info, isEqual);
-  const dispatch = useDispatch();
-  const { getLanguage } = useLocale();
-  const handleLogout = useCallback(() => {
-    dispatch({
-      type: 'account/logout',
-    });
-  }, [dispatch]);
-  const items = useMemo(
-    () =>
-      [
-        {
-          label: getLanguage('sign-out'),
-          icon: <LogoutOutlined />,
-          onClick: handleLogout,
-        },
-      ] as unknown as ItemType[],
-    [getLanguage, handleLogout]
+const LayoutHeader: FC<HeaderProps> = ({ collapsed, onCollapsed }) => {
+  const { t } = localizable;
+
+  const items = useMemo<MenuProps['items']>(
+    () => [
+      {
+        key: 'sign-out',
+        label: t['sign-out'],
+        icon: <LogoutOutlined />,
+        onClick: account.logout,
+      },
+    ],
+    [t]
   );
 
   return (
-    <Layout.Header className={styles.bgWhite}>
-      {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+    <Layout.Header className={styles.header}>
+      {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: styles.trigger,
         onClick: () => isFunction(onCollapsed) && onCollapsed(),
       })}
       <div className={styles.right}>
-        <Dropdown overlay={<Menu items={items} />} placement="bottom">
+        <Dropdown menu={{ items }} placement="bottom">
           <div className={styles.user}>
             <Badge count={0}>
-              <Avatar src={userInfo?.avatar} />
+              <Avatar src={account.info?.avatar} />
             </Badge>
-            <span className={styles.username}>{userInfo?.username}</span>
+            <span className={styles.username}>{account.info?.username}</span>
           </div>
         </Dropdown>
-        <SwitchLanguage />
+        <SwitchLanguage className={styles.lang} />
       </div>
     </Layout.Header>
   );

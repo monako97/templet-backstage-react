@@ -1,7 +1,7 @@
 import React from 'react';
-import Icon from '@/components/icon';
+import { localizable } from 'PackageNameByCore';
 import { Input } from 'antd';
-import { useLocale } from 'PackageNameByCore';
+import Icon from '@/components/icon';
 
 interface InputPasswordProps {
   placeholder?: string;
@@ -9,12 +9,12 @@ interface InputPasswordProps {
 }
 
 const InputPassword: React.FC<InputPasswordProps> = (props: InputPasswordProps) => {
-  const { getLanguage } = useLocale();
+  const { t } = localizable;
 
   return (
     <Input.Password
       prefix={<Icon type="password" />}
-      placeholder={getLanguage('ph:password')}
+      placeholder={t['ph:password']}
       iconRender={(visible: boolean) => (
         <span>
           <Icon type={visible ? 'visible' : 'invisible'} />
