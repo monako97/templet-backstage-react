@@ -1,6 +1,4 @@
-import { createElement } from 'react';
 import { Navigate, type RouterProps } from 'PackageNameByCore';
-import Icon from '@/components/icon';
 
 const routers = [
   {
@@ -27,17 +25,19 @@ const routers = [
       {
         path: 'home',
         closable: false,
-        icon: createElement(Icon, { type: 'home-nav' }),
+        icon: 'icon-home-nav',
       },
       {
         path: 'app-one',
-        icon: createElement(Icon, { type: 'about' }),
+        icon: 'icon-about',
         children: [
           {
             path: 'home',
+            icon: 'icon-home-nav',
           },
           {
             path: 'dynamic/:id',
+            icon: 'icon-about',
           },
         ],
       },
@@ -53,6 +53,16 @@ const routers = [
       },
       {
         path: 'login',
+        hideTabs: true,
+        hideMenu: true,
+        element: Navigate,
+        props: {
+          to: '/home?menuId=home',
+          replace: true,
+        },
+      },
+      {
+        path: '',
         hideTabs: true,
         hideMenu: true,
         element: Navigate,

@@ -1,12 +1,11 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react';
-import { localizable, translatFunction } from 'PackageNameByCore';
+import { IconFont, localizable, interpolateString } from 'PackageNameByCore';
 import { Button, Form, Input, message } from 'antd';
 import styles from './index.less';
+import type { ForgotPassWordParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
-import Icon from '@/components/icon';
 import InputPassword from '@/components/input-password';
-import { ForgotPassWordParams } from '@/services/user';
-import { account } from '@/store';
+import { fetchForgetVerifyCode, forgetPassword, logout } from '@/store';
 
 const PASSWORD_RegExp = /^(\w){6,16}$/;
 const { Item } = Form;
@@ -23,11 +22,11 @@ const ForgotPassword: React.FC = () => {
 
   const onFinish = useCallback((values: ForgotPassWordParams) => {
     setLoading(true);
-    account.forgetPassword(values, (resp) => {
+    forgetPassword(values, (resp) => {
       if (resp.success) {
         message.success(resp.message);
         setLoading(false);
-        account.logout();
+        logout();
       } else {
         message.error(resp.message);
         setLoading(false);
@@ -38,7 +37,7 @@ const ForgotPassword: React.FC = () => {
 
   const getVerifyCode = useCallback(() => {
     setVCLoading(true);
-    account.fetchForgetVerifyCode(form.getFieldsValue(), (resp) => {
+    fetchForgetVerifyCode(form.getFieldsValue(), (resp) => {
       if (resp.success) {
         message.success(resp.message);
         setVCLoading(false);
@@ -80,7 +79,9 @@ const ForgotPassword: React.FC = () => {
 
   const getVCText = useCallback(
     (num = 0): ReactNode => {
-      return translatFunction(t['get-verify-code-time'] as string, Math.ceil((num / 100) * 60));
+      return interpolateString(t['get-verify-code-time'], {
+        val: Math.ceil((num / 100) * 60),
+      });
     },
     [t]
   );
@@ -119,7 +120,7 @@ const ForgotPassword: React.FC = () => {
           {() => (
             <Item label={t['verify-code']} name="verify_code" rules={[{ required: true }]}>
               <Input
-                prefix={<Icon type="verification" />}
+                prefix={<IconFont type="icon-verification" />}
                 placeholder={t['verify-code']}
                 disabled={!isEmail(form.getFieldValue('email'))}
                 addonAfter={

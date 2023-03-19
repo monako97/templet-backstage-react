@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useCallback, useRef } from 'react';
+import { watermark } from 'PackageNameByCommon';
 import {
   type MenuItem,
   DashboardLayout,
@@ -7,9 +8,11 @@ import {
   redirect,
   projectBasicInfo,
   pathToRegexp,
+  menu,
+  setMenu,
 } from 'PackageNameByCore';
 import LoadMicro from '@/components/load-micro';
-import { global, menu } from '@/store';
+import { account, fetchMenu, global } from '@/store';
 
 const appRule = window.__MicroAppActiveRule__.map((item) => {
   return {
@@ -49,6 +52,7 @@ const useMicroApp = () => {
 const App = () => {
   const { kv, activeKey } = menu;
   const { isLogin } = global;
+  const { info } = account;
   const currentMenu = useMemo(() => (activeKey ? kv[activeKey] : null), [kv, activeKey]);
   const outlet = useOutlet();
   const location = useLocation();
@@ -66,16 +70,22 @@ const App = () => {
   useEffect(() => {
     if (isLogin) {
       // 请求初始数据
-      global.fetchMenu(() => {
+      fetchMenu(() => {
         // 在没有权限的路由时返回首页
         if (!menuRef.current) {
           redirect('/home?menuId=home');
         }
       });
     } else {
-      menu.setMenu([]);
+      setMenu([]);
     }
   }, [isLogin]);
+
+  useEffect(() => {
+    // 更新水印
+    watermark.update(info?.username || projectBasicInfo.projectName);
+  }, [info?.username]);
+
   const view = (
     <>
       {current ? null : outlet}

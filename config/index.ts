@@ -5,6 +5,12 @@ const conf: PartialConfigType = {
   layoutSider: {
     theme: 'dark',
   },
+  iconfont: {
+    scriptUrl: [
+      '//at.alicdn.com/t/font_2632005_n3kt9cjpzn.js', // lang icon
+      '//at.alicdn.com/t/font_2446726_525dowa25vp.js', // icon
+    ],
+  },
   assetHtml: [
     {
       // 自动加入 public 文件夹下 满足 *.entry.js 的文件
@@ -13,12 +19,15 @@ const conf: PartialConfigType = {
   ],
   fallbackCompPath: '@/components/fallback',
   importOnDemand: {
+    '@moneko/common': {
+      transform: 'lib/${member}',
+    },
     'neko-ui': {
-      transform: 'neko-ui/es/${member}',
+      transform: 'es/${member}',
       memberTransformers: ['dashed_case'],
     },
     lodash: {
-      transform: 'lodash/${member}',
+      transform: '${member}',
     },
   },
   proxy: [

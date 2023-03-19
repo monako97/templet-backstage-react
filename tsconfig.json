@@ -19,7 +19,7 @@
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "target": "ES5",
+    "target": "ESNext",
     "module": "ESNext",
     "outDir": "lib",
     "declaration": false,

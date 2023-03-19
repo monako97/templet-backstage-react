@@ -1,13 +1,16 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { css, injectGlobal } from '@emotion/css';
-import { localizable } from 'PackageNameByCore';
+import { IconFont, localizable } from 'PackageNameByCore';
 import { Tabs } from 'antd';
-import Icon from '@/components/icon';
 import LayoutFooter from '@/components/layout-footer';
 import LoginForm, { type LoginType } from '@/components/login-form';
 import SwitchLanguage from '@/components/switch-language';
 
 const styles = css`
+  #root {
+    overflow-y: auto;
+  }
+
   .login-page {
     display: flex;
     justify-content: center;
@@ -43,8 +46,8 @@ const styles = css`
 injectGlobal([styles]);
 
 const tabs = [
-  { label: 'sign-in-username', type: 'username', icon: 'personal-nav' },
-  { label: 'sign-in-email', type: 'email', icon: 'email' },
+  { label: 'sign-in-username', type: 'username', icon: 'icon-personal-nav' },
+  { label: 'sign-in-email', type: 'email', icon: 'icon-email' },
 ];
 const Login: React.FC = () => {
   const { t } = localizable;
@@ -54,7 +57,7 @@ const Login: React.FC = () => {
       tabs.map((item) => ({
         label: (
           <span>
-            <Icon type={item.icon} />
+            <IconFont type={item.icon} />
             {t[item.label]}
           </span>
         ),

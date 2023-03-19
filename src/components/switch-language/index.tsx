@@ -1,15 +1,14 @@
 import React, { useMemo } from 'react';
 import { classNames } from 'PackageNameByCommon';
-import { localizable } from 'PackageNameByCore';
+import { IconFont, localizable, setLanguage } from 'PackageNameByCore';
 import { Dropdown, Typography, type MenuProps } from 'antd';
 import styles from './index.less';
-import Icon from '../icon';
 
 interface SwitchLanguageProps {
   className?: string;
 }
 const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLanguageProps) => {
-  const { set, language, locales } = localizable;
+  const { language, locales } = localizable;
 
   const items = useMemo<MenuProps['items']>(
     () =>
@@ -22,18 +21,18 @@ const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLang
               <span>{item.language}</span>
             </div>
           ),
-          icon: <Icon type={item.language} />,
-          onClick: () => set(item.language),
+          icon: <IconFont type={`icon-${item.language}`} />,
+          onClick: () => setLanguage(item.language),
           className: classNames(item.language === language && styles.selectedItem),
         };
       }),
-    [language, locales, set]
+    [language, locales]
   );
 
   return (
     <Dropdown overlayClassName={styles.switchLang} menu={{ items }}>
       <Typography.Text className={`${styles.btn} ${className ? className : ''}`}>
-        <Icon type={language} />
+        <IconFont type={`icon-${language}`} />
       </Typography.Text>
     </Dropdown>
   );

@@ -26,9 +26,9 @@ export const loginByEmail = async (params: LoginByEmailParams) =>
     data: params,
     method: 'POST',
   });
-// 找回密码
-export const forgetPassword = async (params: LoginByEmailParams) =>
-  request<ResponseBody<boolean>>('/forget-password', {
+// 修改密码
+export const changePassword = async (params: LoginByEmailParams) =>
+  request<ResponseBody<boolean>>('/change-password', {
     data: params,
     method: 'POST',
   });

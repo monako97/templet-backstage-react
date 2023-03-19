@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react';
-import { Link, localizable, translatFunction } from 'PackageNameByCore';
+import { IconFont, Link, localizable, interpolateString } from 'PackageNameByCore';
 import { Form, Input, Button, Checkbox } from 'antd';
 import styles from './index.less';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
-import Icon from '@/components/icon';
 import InputPassword from '@/components/input-password';
-import { account } from '@/store';
+import { loginEmail, loginUsername } from '@/store';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;
 
@@ -25,9 +24,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
     (data: LoginByUserNameParams | LoginByEmailParams) => {
       setLoading(true);
       if (type === 'email') {
-        account.loginEmail(data as LoginByEmailParams, () => setLoading(false));
+        loginEmail(data as LoginByEmailParams, () => setLoading(false));
       } else {
-        account.loginUsername(data as LoginByUserNameParams, () => setLoading(false));
+        loginUsername(data as LoginByUserNameParams, () => setLoading(false));
       }
     },
     [type]
@@ -54,13 +53,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
                 if (USERNAME_RegExp.test(value)) {
                   return Promise.resolve();
                 }
-                return Promise.reject(translatFunction(t['ph:len-range'], '4-10'));
+                return Promise.reject(
+                  interpolateString(t['ph:len-range'], {
+                    val: '4-10',
+                  })
+                );
               },
             }),
           ]}
           hasFeedback
         >
-          <Input prefix={<Icon type="username" />} placeholder={t['ph:username']} />
+          <Input prefix={<IconFont type="icon-username" />} placeholder={t['ph:username']} />
         </Item>
       )}
       {type === 'email' && (
@@ -99,7 +102,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
         htmlType="submit"
         className={styles.loginFormButton}
         loading={loading}
-        icon={<Icon type="login" />}
+        icon={<IconFont type="icon-login" />}
       >
         {t['sign-in']}
       </Button>

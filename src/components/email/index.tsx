@@ -1,7 +1,7 @@
 import React, { type FC, useCallback, useState } from 'react';
+import { IconFont } from 'PackageNameByCore';
 import { AutoComplete, Input, type AutoCompleteProps } from 'antd';
 import { HighlightText } from 'neko-ui';
-import Icon from '@/components/icon';
 
 const emailWhitelist = [
   '@qq.com',
@@ -72,7 +72,7 @@ const Email: FC<EmailProps> = ({ className, placeholder, disabled, value, onChan
       onSearch={handleSearch}
       disabled={disabled}
     >
-      <Input prefix={<Icon type="email" />} placeholder={placeholder} />
+      <Input prefix={<IconFont type="icon-email" />} placeholder={placeholder} />
     </AutoComplete>
   );
 };
