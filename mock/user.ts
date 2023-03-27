@@ -44,7 +44,7 @@ const conf: MockConfiguration = {
         avatar: '',
         birthday: 853718400000,
         create_time: 1576795086000,
-        email: 'poi.***@qq.com',
+        email: req.body.email,
         id: 1,
         last_active_ip: '127.0.0.1',
         last_active_time: new Date().getTime(),
@@ -52,7 +52,7 @@ const conf: MockConfiguration = {
         phone: '173****5454',
         status: 1,
         update_time: 1612553329000,
-        username: req.body.username,
+        username: req.body.email,
       },
     };
 

@@ -8,7 +8,8 @@ import SwitchLanguage from '@/components/switch-language';
 
 const styles = css`
   #root {
-    overflow-y: auto;
+    min-height: 100vh;
+    flex-direction: column;
   }
 
   .login-page {
@@ -16,7 +17,7 @@ const styles = css`
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
+    flex: 1;
     flex-direction: column;
   }
 
