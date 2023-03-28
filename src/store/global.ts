@@ -1,5 +1,5 @@
-import { isFunction, persistence } from "PackageNameByCommon";
-import { sso, type MenuItem, router, setMenu } from "PackageNameByCore";
+import { isFunction, persistence } from 'PackageNameByCommon';
+import { sso, type MenuItem, router, setMenu } from 'PackageNameByCore';
 
 /** 持久化数据key */
 export const globalPersistenceKey = 'global.isLogin';
