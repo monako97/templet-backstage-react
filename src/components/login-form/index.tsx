@@ -5,7 +5,7 @@ import styles from './index.less';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
 import InputPassword from '@/components/input-password';
-import { loginEmail, loginUsername } from '@/store';
+import { account } from '@/store';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;
 
@@ -24,9 +24,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
     (data: LoginByUserNameParams | LoginByEmailParams) => {
       setLoading(true);
       if (type === 'email') {
-        loginEmail(data as LoginByEmailParams, () => setLoading(false));
+        account.loginEmail(data as LoginByEmailParams, () => setLoading(false));
       } else {
-        loginUsername(data as LoginByUserNameParams, () => setLoading(false));
+        account.loginUsername(data as LoginByUserNameParams, () => setLoading(false));
       }
     },
     [type]

@@ -38,57 +38,52 @@ export const accountPersistenceKey = 'account.info';
 export const account = sso({
   /** 用户信息, 默认值：读取持久化数据 */
   info: persistence.load<UserInfo | null>(accountPersistenceKey, null),
+  /** 登出账号
+   * @constructor
+   */
+  logout() {
+    localStorage.clear();
+    account.info = null;
+    global.isLogin = false;
+  },
+  async loginUsername(data: LoginByUserNameParams, callback: Callback<UserInfo>) {
+    const resp = await loginByUserName(data);
+
+    if (resp.success) {
+      account.info = resp.result;
+      global.isLogin = true;
+    }
+    if (isFunction(callback)) {
+      callback(resp);
+      return;
+    }
+  },
+  async loginEmail(data: LoginByEmailParams, callback: Callback<UserInfo>) {
+    const resp = await loginByEmail(data);
+
+    if (resp.success) {
+      account.info = resp.result;
+      global.isLogin = true;
+    }
+    if (isFunction(callback)) {
+      callback(resp);
+      return;
+    }
+  },
+  async forgetPassword(data: ForgotPassWordParams, callback: Callback<boolean>) {
+    const resp = await changePassword(data);
+
+    if (isFunction(callback)) {
+      callback(resp);
+      return;
+    }
+  },
+  async fetchForgetVerifyCode(data: Record<string, string>, callback: Callback<boolean>) {
+    const resp = await getForgetVerifyCode(data);
+
+    if (isFunction(callback)) {
+      callback(resp);
+      return;
+    }
+  },
 });
-
-/** 登出账号
- * @constructor
- */
-export function logout() {
-  localStorage.clear();
-  account.info = null;
-  global.isLogin = false;
-}
-export async function loginUsername(data: LoginByUserNameParams, callback: Callback<UserInfo>) {
-  const resp = await loginByUserName(data);
-
-  if (resp.success) {
-    account.info = resp.result;
-    global.isLogin = true;
-  }
-  if (isFunction(callback)) {
-    callback(resp);
-    return;
-  }
-}
-
-export async function loginEmail(data: LoginByEmailParams, callback: Callback<UserInfo>) {
-  const resp = await loginByEmail(data);
-
-  if (resp.success) {
-    account.info = resp.result;
-    global.isLogin = true;
-  }
-  if (isFunction(callback)) {
-    callback(resp);
-    return;
-  }
-}
-export async function forgetPassword(data: ForgotPassWordParams, callback: Callback<boolean>) {
-  const resp = await changePassword(data);
-
-  if (isFunction(callback)) {
-    callback(resp);
-    return;
-  }
-}
-export async function fetchForgetVerifyCode(
-  data: Record<string, string>,
-  callback: Callback<boolean>
-) {
-  const resp = await getForgetVerifyCode(data);
-
-  if (isFunction(callback)) {
-    callback(resp);
-    return;
-  }
-}

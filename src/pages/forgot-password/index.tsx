@@ -5,7 +5,7 @@ import styles from './index.less';
 import type { ForgotPassWordParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
 import InputPassword from '@/components/input-password';
-import { fetchForgetVerifyCode, forgetPassword, logout } from '@/store';
+import { account } from '@/store';
 
 const PASSWORD_RegExp = /^(\w){6,16}$/;
 const { Item } = Form;
@@ -22,11 +22,11 @@ const ForgotPassword: React.FC = () => {
 
   const onFinish = useCallback((values: ForgotPassWordParams) => {
     setLoading(true);
-    forgetPassword(values, (resp) => {
+    account.forgetPassword(values, (resp) => {
       if (resp.success) {
         message.success(resp.message);
         setLoading(false);
-        logout();
+        account.logout();
       } else {
         message.error(resp.message);
         setLoading(false);
@@ -37,7 +37,7 @@ const ForgotPassword: React.FC = () => {
 
   const getVerifyCode = useCallback(() => {
     setVCLoading(true);
-    fetchForgetVerifyCode(form.getFieldsValue(), (resp) => {
+    account.fetchForgetVerifyCode(form.getFieldsValue(), (resp) => {
       if (resp.success) {
         message.success(resp.message);
         setVCLoading(false);
@@ -152,5 +152,5 @@ const ForgotPassword: React.FC = () => {
     </div>
   );
 };
-
+  
 export default ForgotPassword;

@@ -12,7 +12,7 @@ import {
   setMenu,
 } from 'PackageNameByCore';
 import LoadMicro from '@/components/load-micro';
-import { account, fetchMenu, global } from '@/store';
+import { account, global } from '@/store';
 
 const appRule = window.__MicroAppActiveRule__.map((item) => {
   return {
@@ -70,7 +70,7 @@ const App = () => {
   useEffect(() => {
     if (isLogin) {
       // 请求初始数据
-      fetchMenu(() => {
+      global.fetchMenu(() => {
         // 在没有权限的路由时返回首页
         if (!menuRef.current) {
           redirect('/home?menuId=home');

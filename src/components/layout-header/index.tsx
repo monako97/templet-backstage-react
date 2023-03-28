@@ -5,7 +5,7 @@ import { localizable } from 'PackageNameByCore';
 import { Avatar, Badge, Dropdown, Layout, type MenuProps } from 'antd';
 import styles from './index.less';
 import SwitchLanguage from '@/components/switch-language';
-import { account, logout } from '@/store';
+import { account } from '@/store';
 
 interface HeaderProps {
   collapsed: boolean;
@@ -22,7 +22,7 @@ const LayoutHeader: FC<HeaderProps> = ({ collapsed, onCollapsed }) => {
         key: 'sign-out',
         label: t['sign-out'],
         icon: <LogoutOutlined />,
-        onClick: logout,
+        onClick: account.logout,
       },
     ],
     [t]

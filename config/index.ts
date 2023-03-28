@@ -37,7 +37,7 @@ const conf: PartialConfigType = {
       changeOrigin: true,
       pathRewrite: { '^/api/': '/' },
       secure: false,
-    }
+    },
   ] as unknown as PartialConfigType['proxy'],
 };
 
