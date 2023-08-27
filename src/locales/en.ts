@@ -1,16 +1,16 @@
-import type { LocaleConfig } from 'PackageNameByCore';
+import type { LocaleConfig } from '@app/locales';
 
 const en: LocaleConfig = {
   language: 'en_US',
   title: '英文',
   translation: {
-    'route-home': 'Home',
-    'route-password': 'Change password',
-    'route-forgot-password': 'Forgot password',
-    'route-login': 'Login',
-    'route-app-one': 'Micro 1',
-    'route-app-one/dynamic/:id': 'Micro 1: Dynamic ID',
-    'route-app-one/home': 'Micro 1: Home',
+    home: 'Home',
+    'change-password': 'Change password',
+    'forgot-password': 'Forgot password',
+    login: 'Login',
+    'app-one': 'Micro',
+    'app-one/dynamic/:id': 'Dynamic ID',
+    'app-one/home': 'Home',
     jump: 'Jump',
     email: 'Email',
     username: 'Name',
@@ -35,6 +35,8 @@ const en: LocaleConfig = {
     'ph:validator-email': 'Please fill in the correct email address',
     'ph:please-fill': 'Please fill in',
     'ph:fill-correct': 'Please fill in the legal',
+    collapse: 'Collapsed',
+    open: 'Open',
   },
 };
 

@@ -1,16 +1,16 @@
-import type { LocaleConfig } from 'PackageNameByCore';
+import type { LocaleConfig } from '@app/locales';
 
 const zhCN: LocaleConfig = {
   language: 'zh_CN',
   title: '简体中文',
   translation: {
-    'route-home': '主页',
-    'route-password': '修改密码',
-    'route-forgot-password': '忘记密码',
-    'route-login': '登录',
-    'route-app-one': '微应用1',
-    'route-app-one/dynamic/:id': '微应用1: 动态路由-ID',
-    'route-app-one/home': '微应用1: 主页',
+    home: '主页',
+    'change-password': '修改密码',
+    'forgot-password': '忘记密码',
+    login: '登录',
+    'app-one': '微应用',
+    'app-one/dynamic/:id': '动态路由-ID',
+    'app-one/home': '主页',
     jump: '跳转',
     about: '关于',
     unknown: '未知',
@@ -35,6 +35,8 @@ const zhCN: LocaleConfig = {
     'ph:validator-email': '请填写正确的电子邮箱',
     'ph:please-fill': '请填写',
     'ph:fill-correct': '请填写合法的',
+    collapse: '收起',
+    open: '展开',
   },
 };
 

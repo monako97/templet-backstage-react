@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
-import { classNames } from 'PackageNameByCommon';
-import { IconFont, localizable, setLanguage } from 'PackageNameByCore';
-import { Dropdown, Typography, type MenuProps } from 'antd';
+import localizable, { locales, setLang } from '@app/locales';
+import { Dropdown, type MenuProps, Typography } from 'antd';
 import styles from './index.less';
+import IconFont from '@/components/iconfont';
 
 interface SwitchLanguageProps {
   className?: string;
 }
 const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLanguageProps) => {
-  const { language, locales } = localizable;
+  const { language } = localizable.lang;
 
   const items = useMemo<MenuProps['items']>(
     () =>
@@ -22,11 +22,10 @@ const SwitchLanguage: React.FC<SwitchLanguageProps> = ({ className }: SwitchLang
             </div>
           ),
           icon: <IconFont type={`icon-${item.language}`} />,
-          onClick: () => setLanguage(item.language),
-          className: classNames(item.language === language && styles.selectedItem),
+          onClick: () => setLang(item.language),
         };
       }),
-    [language, locales]
+    [],
   );
 
   return (

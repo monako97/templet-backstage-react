@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { IconFont, Link, localizable, interpolateString } from 'PackageNameByCore';
-import { Form, Input, Button, Checkbox } from 'antd';
+import localizable, { interpolateString } from '@app/locales';
+import { LinkWithMenuId } from '@moneko/react';
+import { Button, Checkbox, Form, Input } from 'antd';
 import styles from './index.less';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
+import IconFont from '@/components/iconfont';
 import InputPassword from '@/components/input-password';
-import { account } from '@/store';
+import { account } from '@/store/account';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;
 
@@ -29,7 +31,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
         account.loginUsername(data as LoginByUserNameParams, () => setLoading(false));
       }
     },
-    [type]
+    [type],
   );
 
   return (
@@ -56,7 +58,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
                 return Promise.reject(
                   interpolateString(t['ph:len-range'], {
                     val: '4-10',
-                  })
+                  }),
                 );
               },
             }),
@@ -93,9 +95,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
         <Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>{t.remember}</Checkbox>
         </Item>
-        <Link className={styles.loginFormForgot} to="/forgot-password">
-          {t['route-forgot-password']}
-        </Link>
+        <LinkWithMenuId className={styles.loginFormForgot} to="/forgot-password">
+          {t['forgot-password']}
+        </LinkWithMenuId>
       </Item>
       <Button
         type="primary"

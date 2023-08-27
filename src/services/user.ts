@@ -1,5 +1,5 @@
-import { request, type ResponseBody } from '@/services';
-import { type UserInfo } from '@/store';
+import { type ResponseBody, request } from '@/services';
+import { type UserInfo } from '@/store/account';
 
 export type LoginByUserNameParams = {
   username: string;

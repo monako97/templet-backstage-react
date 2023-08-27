@@ -1,0 +1,93 @@
+.layout {
+  inline-size: 100% !important;
+  min-block-size: 100vb !important;
+}
+
+.sider,
+.section {
+  overflow-y: auto;
+  max-block-size: 100vb;
+}
+
+.section {
+  overflow-y: auto;
+}
+
+.sider {
+  overflow-y: auto;
+}
+
+.content {
+  z-index: 1;
+  display: flex;
+  margin: 16px 16px 0;
+  flex-direction: column;
+}
+
+.view {
+  border-radius: var(--border-radius, 8px);
+  padding: 24px;
+  background: var(--component-card-bg, #fff);
+  box-shadow: var(--box-shadow-lite);
+  flex: 1;
+  transition-property: background-color, box-shadow;
+}
+
+.view,
+.logo,
+.logo > svg {
+  transition-duration: var(--transition-duration, 0.3s);
+  transition-timing-function: var(--transition-timing-function, cubic-bezier(0.94, -0.1, 0.1, 1.2));
+}
+
+.logo {
+  position: sticky;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 14px;
+  text-align: center;
+  color: #de4553;
+  inset-block-start: 0;
+  gap: 10px;
+  block-size: 68px;
+  transition-property: background-color, border-color;
+  cursor: pointer;
+  user-select: none;
+  background-color: #001529;
+
+  > svg,
+  &::before {
+    transition-property: opacity;
+  }
+
+  > svg {
+    block-size: 32px;
+    opacity: 0;
+  }
+
+  &::before {
+    display: block;
+    inline-size: 22px;
+    block-size: 32px;
+    background: url("@{favicon}") no-repeat center center / contain;
+    opacity: 1;
+    content: '';
+    transition-duration: var(--transition-duration, 0.3s);
+    transition-timing-function: var(
+      --transition-timing-function,
+      cubic-bezier(0.94, -0.1, 0.1, 1.2)
+    );
+  }
+  & + :global(.@{ant-prefix}-menu) {
+    padding-block-end: 48px;
+  }
+}
+
+.trigger {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}

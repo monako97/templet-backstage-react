@@ -1,12 +1,7 @@
 .switch-lang {
   :global(.@{ant-prefix}-dropdown-menu-item) {
-    display: flex;
-    align-items: center;
-    > span:not(:global(.@{iconfont-css-prefix})) {
-      flex: 1;
-    }
-    :global(.@{iconfont-css-prefix}) {
-      margin-right: 5px;
+    svg {
+      margin-inline-end: 5px;
       font-size: 30px;
     }
   }
@@ -25,13 +20,8 @@
   align-items: flex-end;
 
   span {
-    margin-left: 5px;
+    margin-inline-start: 5px;
     font-size: 12px;
     opacity: 0.45;
   }
-}
-
-.selected-item {
-  color: var(--primary-5);
-  background-color: var(--primary-1);
 }

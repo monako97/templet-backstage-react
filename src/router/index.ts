@@ -1,26 +1,20 @@
-import { Navigate, type RouterProps } from 'PackageNameByCore';
+import { lazy } from 'react';
+import { RouteConfig } from '@app/routes';
+import { Navigate } from '@moneko/react';
 
-const routers = [
+const routers: RouteConfig[] = [
   {
-    path: '*',
+    path: '/',
     root: true,
+    element: lazy(() => import('@/app')),
     children: [
       {
         path: 'login',
-        onlyLogin: true,
+        hideMenu: true,
       },
       {
         path: 'forgot-password',
-        onlyLogin: true,
-      },
-      {
-        path: '*',
-        onlyLogin: true,
-        element: Navigate,
-        props: {
-          to: '/login',
-          replace: true,
-        },
+        hideMenu: true,
       },
       {
         path: 'home',
@@ -45,34 +39,23 @@ const routers = [
         path: 'refresh',
         hideTabs: true,
         hideMenu: true,
-        element: Navigate,
-        props: {
-          to: -1,
-          replace: true,
-        },
       },
-      {
-        path: 'login',
-        hideTabs: true,
-        hideMenu: true,
-        element: Navigate,
-        props: {
-          to: '/home?menuId=home',
-          replace: true,
-        },
-      },
+      ...Array.from({ length: 20 }, (_, i) => ({
+        path: `forgot-${i + 1}`,
+        icon: 'icon-password',
+      })),
       {
         path: '',
         hideTabs: true,
         hideMenu: true,
         element: Navigate,
-        props: {
+        meta: {
           to: '/home?menuId=home',
           replace: true,
         },
       },
     ],
   },
-] as unknown as RouterProps;
+];
 
 export default routers;

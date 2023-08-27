@@ -1,11 +1,12 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react';
-import { IconFont, localizable, interpolateString } from 'PackageNameByCore';
+import localizable, { interpolateString } from '@app/locales';
 import { Button, Form, Input, message } from 'antd';
 import styles from './index.less';
 import type { ForgotPassWordParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
+import IconFont from '@/components/iconfont';
 import InputPassword from '@/components/input-password';
-import { account } from '@/store';
+import { account } from '@/store/account';
 
 const PASSWORD_RegExp = /^(\w){6,16}$/;
 const { Item } = Form;
@@ -83,12 +84,12 @@ const ForgotPassword: React.FC = () => {
         val: Math.ceil((num / 100) * 60),
       });
     },
-    [t]
+    [t],
   );
 
   return (
     <div className={styles.forgot}>
-      <p className={styles.title}>{t['route-forgot-password']}</p>
+      <p className={styles.title}>{t['forgot-password']}</p>
       <Form
         name="forgot"
         form={form}
@@ -145,7 +146,7 @@ const ForgotPassword: React.FC = () => {
         </Item>
         <Item>
           <Button type="primary" htmlType="submit" className={styles.submit} loading={loading}>
-            {t['route-password']}
+            {t['password']}
           </Button>
         </Item>
       </Form>

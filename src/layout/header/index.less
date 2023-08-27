@@ -1,13 +1,17 @@
 .header {
   position: sticky;
-  top: 0;
   z-index: 2;
   display: flex;
   align-items: center;
+  overflow-x: hidden;
   border-radius: 0;
-  padding: 0 24px !important;
+  padding: 0 16px;
   background-color: rgb(255 255 255 / 80%);
+  inset-block-start: 0;
   backdrop-filter: blur(16px);
+  /* stylelint-disable-next-line */
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 0 13px -13px rgb(0 0 0 / 10%);
 }
 
 .right {
@@ -15,7 +19,7 @@
   justify-content: flex-end;
   align-items: center;
   gap: 16px;
-  flex: 1;
+  min-inline-size: fit-content;
 }
 
 .user {
@@ -39,4 +43,11 @@
 .lang {
   display: block;
   line-height: 64px;
+}
+
+.tabs {
+  flex: 1;
+  transform: translateY(12px);
+  display: block;
+  overflow: hidden;
 }

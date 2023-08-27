@@ -1,16 +1,16 @@
-import { isFunction, persistence } from 'PackageNameByCommon';
-import { sso } from 'PackageNameByCore';
+import { isFunction, persistence } from '@moneko/common';
+import sso from 'shared-store-object';
 import type { ResponseBody } from '@/services';
 import {
-  loginByEmail,
-  loginByUserName,
-  changePassword,
-  getForgetVerifyCode,
   type ForgotPassWordParams,
   type LoginByEmailParams,
   type LoginByUserNameParams,
+  changePassword,
+  getForgetVerifyCode,
+  loginByEmail,
+  loginByUserName,
 } from '@/services/user';
-import { global } from '@/store';
+import { global } from '@/store/global';
 
 export interface UserInfo {
   address?: string;

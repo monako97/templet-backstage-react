@@ -1,22 +1,8 @@
 import React, { type FC, useCallback, useState } from 'react';
-import { IconFont } from 'PackageNameByCore';
-import { AutoComplete, Input, type AutoCompleteProps } from 'antd';
-import { HighlightText } from 'neko-ui';
+import { AutoComplete, type AutoCompleteProps, Input } from 'antd';
+import IconFont from '@/components/iconfont';
 
-const emailWhitelist = [
-  '@qq.com',
-  '@163.com',
-  '@vip.163.com',
-  '@263.net',
-  '@yeah.net',
-  '@sohu.com',
-  '@sina.cn',
-  '@sina.com',
-  '@eyou.com',
-  '@gmail.com',
-  '@hotmail.com',
-  '@42du.cn',
-];
+const emailWhitelist = ['@qq.com', '@163.com', '@vip.163.com'];
 
 export function isEmail(email: string, whitelist?: string[]): boolean {
   const domains = whitelist || emailWhitelist;
@@ -57,7 +43,7 @@ const Email: FC<EmailProps> = ({ className, placeholder, disabled, value, onChan
 
       return {
         value: text,
-        label: <HighlightText text={text} highlight={domain} flag="i" />,
+        label: text,
       };
     });
     setResult(res);

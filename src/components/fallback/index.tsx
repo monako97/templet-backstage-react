@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOutlet } from 'PackageNameByCore';
+import { useOutlet } from '@moneko/react';
 import { Skeleton } from 'antd';
 
 const Fallback = () => {

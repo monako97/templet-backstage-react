@@ -1,19 +1,13 @@
-import React, { createElement, type FC, useMemo } from 'react';
-import { MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
-import { isFunction } from 'PackageNameByCommon';
-import { localizable } from 'PackageNameByCore';
+import React, { useMemo } from 'react';
+import { LogoutOutlined } from '@ant-design/icons';
+import localizable from '@app/locales';
 import { Avatar, Badge, Dropdown, Layout, type MenuProps } from 'antd';
 import styles from './index.less';
+import LayoutTabs from '../tabs';
 import SwitchLanguage from '@/components/switch-language';
-import { account } from '@/store';
+import { account } from '@/store/account';
 
-interface HeaderProps {
-  collapsed: boolean;
-  // eslint-disable-next-line no-unused-vars
-  onCollapsed?: (value?: boolean) => void;
-}
-
-const LayoutHeader: FC<HeaderProps> = ({ collapsed, onCollapsed }) => {
+const LayoutHeader = () => {
   const { t } = localizable;
 
   const items = useMemo<MenuProps['items']>(
@@ -25,15 +19,14 @@ const LayoutHeader: FC<HeaderProps> = ({ collapsed, onCollapsed }) => {
         onClick: account.logout,
       },
     ],
-    [t]
+    [t],
   );
 
   return (
     <Layout.Header className={styles.header}>
-      {createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-        className: styles.trigger,
-        onClick: () => isFunction(onCollapsed) && onCollapsed(),
-      })}
+      <div className={styles.tabs}>
+        <LayoutTabs />
+      </div>
       <div className={styles.right}>
         <Dropdown menu={{ items }} placement="bottom">
           <div className={styles.user}>

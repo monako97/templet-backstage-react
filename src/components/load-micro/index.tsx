@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { localizable } from 'PackageNameByCore';
-import { addGlobalUncaughtErrorHandler, loadMicroApp, type MicroApp } from 'qiankun';
+import localizable from '@app/locales';
+import { message } from 'antd';
+import { type MicroApp, addGlobalUncaughtErrorHandler, loadMicroApp } from 'qiankun';
 
-// eslint-disable-next-line no-console
-addGlobalUncaughtErrorHandler((event) => console.log(event));
+addGlobalUncaughtErrorHandler((event) => message.error(event.toString()));
 
 type LoginAppProps = {
   name?: string;
@@ -21,7 +21,7 @@ const LoadMicroApp: React.FC<LoginAppProps> = ({
   active = '',
   ...other
 }) => {
-  const { language } = localizable;
+  const { lang } = localizable;
   const [apps, setApps] = useState(name ? [name] : []);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const LoadMicroApp: React.FC<LoginAppProps> = ({
           container: loginContainer,
           props: {
             basename,
-            language: language,
+            language: lang.language,
             ...other,
             PROJECTNAME: process.env.PROJECTNAME,
             __MicroAppEntry__: window.__MicroAppEntry__,
@@ -66,10 +66,10 @@ const LoadMicroApp: React.FC<LoginAppProps> = ({
               mode: 'cors',
             });
           },
-        }
+        },
       ),
     });
-  }, [active, basename, entry, language, name, other]);
+  }, [active, basename, entry, lang, name, other]);
 
   useEffect(() => {
     load();

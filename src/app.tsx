@@ -1,18 +1,14 @@
-import React, { useEffect, useMemo, useCallback, useRef } from 'react';
-import { watermark } from 'PackageNameByCommon';
-import {
-  type MenuItem,
-  DashboardLayout,
-  useOutlet,
-  useLocation,
-  redirect,
-  projectBasicInfo,
-  pathToRegexp,
-  menu,
-  setMenu,
-} from 'PackageNameByCore';
+import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
+import app from '@app';
+import { watermark } from '@moneko/common';
+import { useLocation, useNavigate, useOutlet } from '@moneko/react';
+import { ConfigProvider } from 'antd';
 import LoadMicro from '@/components/load-micro';
-import { account, global } from '@/store';
+import '@/global.less';
+import Dashboard from '@/layout';
+import { account } from '@/store/account';
+import { global } from '@/store/global';
+import menu, { type MenuItem, setMenu } from '@/store/menu';
 
 const appRule = window.__MicroAppActiveRule__.map((item) => {
   return {
@@ -21,8 +17,20 @@ const appRule = window.__MicroAppActiveRule__.map((item) => {
   };
 });
 const allMicrror: string[] = appRule.map((item) => item.activeRule).flat();
+
+function pathToRegexp(path: string) {
+  const keys: string[] = [];
+  const pattern = path
+    .replace(/:[^\s/]+/g, (match) => {
+      keys.push(match.substring(1));
+      return '([^\\s/]+)';
+    })
+    .replace(/\//g, '\\/');
+
+  return new RegExp(`^${pattern}$`);
+}
 const useMicroApp = () => {
-  const hash = projectBasicInfo.programInfo.routerMode === 'hash' ? '/#' : '';
+  const hash = app.routerMode === 'hash' ? '/#' : '';
   const location = useLocation();
   const isMicro = useCallback(() => {
     const pathname = location.pathname;
@@ -53,6 +61,7 @@ const App = () => {
   const { kv, activeKey } = menu;
   const { isLogin } = global;
   const { info } = account;
+  const navigate = useNavigate();
   const currentMenu = useMemo(() => (activeKey ? kv[activeKey] : null), [kv, activeKey]);
   const outlet = useOutlet();
   const location = useLocation();
@@ -73,27 +82,32 @@ const App = () => {
       global.fetchMenu(() => {
         // 在没有权限的路由时返回首页
         if (!menuRef.current) {
-          redirect('/home?menuId=home');
+          navigate('/home?menuId=home');
         }
       });
     } else {
       setMenu([]);
+      navigate('/login?menuId=login');
     }
-  }, [isLogin]);
+  }, [isLogin, navigate]);
 
   useEffect(() => {
     // 更新水印
-    watermark.update(info?.username || projectBasicInfo.projectName);
+    watermark.update(info?.username || app.name);
   }, [info?.username]);
 
   const view = (
-    <>
+    <Fragment>
       {current ? null : outlet}
       {microView}
-    </>
+    </Fragment>
   );
 
-  return isLogin ? <DashboardLayout>{view}</DashboardLayout> : view;
+  return (
+    <ConfigProvider prefixCls={app.prefixCls} iconPrefixCls={app.iconPrefixCls}>
+      {isLogin ? <Dashboard>{view}</Dashboard> : view}
+    </ConfigProvider>
+  );
 };
 
 export default App;

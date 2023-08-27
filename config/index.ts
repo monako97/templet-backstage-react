@@ -1,16 +1,6 @@
-import type { PartialConfigType } from 'PackageNameByCore';
+import type { ConfigType } from 'PackageNameByCore';
 
-const conf: PartialConfigType = {
-  publicPath: '/',
-  layoutSider: {
-    theme: 'dark',
-  },
-  iconfont: {
-    scriptUrl: [
-      '//at.alicdn.com/t/font_2632005_n3kt9cjpzn.js', // lang icon
-      '//at.alicdn.com/t/font_2446726_525dowa25vp.js', // icon
-    ],
-  },
+const conf: Partial<ConfigType> = {
   assetHtml: [
     {
       // 自动加入 public 文件夹下 满足 *.entry.js 的文件
@@ -21,10 +11,6 @@ const conf: PartialConfigType = {
   importOnDemand: {
     '@moneko/common': {
       transform: 'lib/${member}',
-    },
-    'neko-ui': {
-      transform: 'es/${member}',
-      memberTransformers: ['dashed_case'],
     },
     lodash: {
       transform: '${member}',
@@ -38,7 +24,7 @@ const conf: PartialConfigType = {
       pathRewrite: { '^/api/': '/' },
       secure: false,
     },
-  ] as unknown as PartialConfigType['proxy'],
+  ],
 };
 
 export default conf;

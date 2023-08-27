@@ -1,7 +1,7 @@
 import React from 'react';
-import { localizable } from 'PackageNameByCore';
+import localizable from '@app/locales';
 import styles from './index.less';
-import { account } from '@/store';
+import { account } from '@/store/account';
 
 const Home: React.FC = () => {
   const { t } = localizable;

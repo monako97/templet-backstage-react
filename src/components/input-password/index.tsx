@@ -1,6 +1,7 @@
 import React from 'react';
-import { IconFont, localizable } from 'PackageNameByCore';
+import localizable from '@app/locales';
 import { Input } from 'antd';
+import IconFont from '@/components/iconfont';
 
 interface InputPasswordProps {
   placeholder?: string;

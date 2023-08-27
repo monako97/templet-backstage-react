@@ -1,0 +1,13 @@
+.tabs {
+    inset-block-start: 100%;
+
+   :global {
+        .@{prefix-cls}-tabs-nav {
+            margin-block-end: 0;
+
+            &::before {
+                content: none;
+            }
+        }
+    }
+}

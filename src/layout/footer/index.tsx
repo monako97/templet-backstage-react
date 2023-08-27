@@ -1,43 +1,25 @@
 import React from 'react';
-import { css } from '@emotion/css';
-import { projectBasicInfo } from 'PackageNameByCore';
+import app from '@app';
 import { Layout } from 'antd';
+import styles from './index.less';
 
-const footer = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  max-height: 73px;
-  font-size: 12px;
-  text-align: center;
-  color: var(--disabled-color);
-  background-color: transparent;
-  flex-direction: column;
-
-  a {
-    color: var(--disabled-color);
-  }
-`;
-const beian = css`
-  padding: 0 12px;
-`;
 const year = new Date().getFullYear();
 
 const LayoutFooter: React.FC = () => {
   return (
-    <Layout.Footer className={footer}>
+    <Layout.Footer className={styles.footer}>
       <p>
         <a target="_blank" rel="noopener noreferrer">
-          {projectBasicInfo.projectName}
+          {app.name}
         </a>
         &nbsp;&copy; {year} Created by&nbsp;
         <a target="_blank" rel="noopener noreferrer">
-          {projectBasicInfo.programInfo.author.name}
+          {app.author.name}
         </a>
       </p>
       <p>
         <a
-          className={beian}
+          className={styles.beian}
           href="https://beian.miit.gov.cn/#/Integrated/recordQuery"
           target="_blank"
           rel="noopener noreferrer"

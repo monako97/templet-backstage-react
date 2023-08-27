@@ -1,50 +1,11 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { css, injectGlobal } from '@emotion/css';
-import { IconFont, localizable } from 'PackageNameByCore';
+import localizable from '@app/locales';
 import { Tabs } from 'antd';
-import LayoutFooter from '@/components/layout-footer';
+import styles from './index.less';
+import IconFont from '@/components/iconfont';
 import LoginForm, { type LoginType } from '@/components/login-form';
 import SwitchLanguage from '@/components/switch-language';
-
-const styles = css`
-  #root {
-    min-height: 100vh;
-    flex-direction: column;
-  }
-
-  .login-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    flex: 1;
-    flex-direction: column;
-  }
-
-  .login-tabs {
-    width: 100%;
-  }
-
-  .login-box {
-    min-width: 288px;
-  }
-
-  .login-title {
-    margin-bottom: 32px;
-    font-size: 24px;
-    font-weight: 600;
-  }
-
-  .login-toolbox {
-    position: absolute;
-    right: 0;
-    display: flex;
-    align-items: center;
-    padding: 8px 16px;
-  }
-`;
-
-injectGlobal([styles]);
+import LayoutFooter from '@/layout/footer';
 
 const tabs = [
   { label: 'sign-in-username', type: 'username', icon: 'icon-personal-nav' },
@@ -65,7 +26,7 @@ const Login: React.FC = () => {
         destroyInactiveTabPane: true,
         key: item.type,
       })),
-    [t]
+    [t],
   );
   const handleTypeChange = useCallback((key: string) => {
     setType(key as LoginType);
@@ -73,14 +34,14 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className="login-toolbox">
+      <div className={styles.toolbox}>
         <SwitchLanguage />
       </div>
-      <div className="login-page">
-        <p className="login-title">{t['route-login']}</p>
-        <div className="login-box">
+      <div className={styles.page}>
+        <p className={styles.title}>{t['login']}</p>
+        <div className={styles.box}>
           <Tabs
-            className="login-tabs"
+            className={styles.tabs}
             activeKey={type}
             centered
             items={items}

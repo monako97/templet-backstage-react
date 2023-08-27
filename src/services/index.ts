@@ -1,5 +1,5 @@
-import { extend, type ResponseBody } from 'PackageNameByRequest';
-export { request, type ResponseBody } from 'PackageNameByRequest';
+import { type ResponseBody, extend } from '@moneko/request';
+export { request, type ResponseBody } from '@moneko/request';
 
 extend({
   interceptor: {
