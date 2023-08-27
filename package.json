@@ -10,6 +10,7 @@
   "license": "MIT",
   "devDependencies": {},
   "dependencies": {
+    "@moneko/common": "1.2.0",
     "antd": "5.8.4",
     "qiankun": "2.10.13"
   },
