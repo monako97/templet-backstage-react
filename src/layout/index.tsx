@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import app from '@app';
+import app from '@app/info';
 import localizable from '@app/locales';
 import { Layout } from 'antd';
 import { useOutlet } from 'react-router-dom';

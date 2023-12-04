@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
-import app from '@app';
+import app from '@app/info';
 import { watermark } from '@moneko/common';
 import { useLocation, useNavigate, useOutlet } from '@moneko/react';
 import { ConfigProvider } from 'antd';

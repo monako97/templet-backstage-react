@@ -1,5 +1,5 @@
 import React from 'react';
-import app from '@app';
+import app from '@app/info';
 import { Typography } from 'antd';
 import styles from './index.less';
 
