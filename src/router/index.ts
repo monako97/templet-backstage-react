@@ -49,7 +49,7 @@ const routers: RouteConfig[] = [
         hideTabs: true,
         hideMenu: true,
         element: Navigate,
-        meta: {
+        metadata: {
           to: '/home?menuId=home',
           replace: true,
         },
