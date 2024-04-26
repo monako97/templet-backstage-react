@@ -1,12 +1,9 @@
 import type { ConfigType } from 'PackageNameByCore';
 
 const conf: Partial<ConfigType> = {
-  assetHtml: [
-    {
-      // 自动加入 public 文件夹下 满足 *.entry.js 的文件
-      glob: './public/*.entry.js',
-    },
-  ],
+  copy: {
+    dirs: ['public']
+  },
   fallbackCompPath: '@/components/fallback',
   importOnDemand: {
     '@moneko/common': {
