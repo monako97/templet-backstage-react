@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import localizable from '@app/locales';
 import { Tabs } from 'antd';
-import styles from './index.less';
+import * as styles from './index.less';
 import IconFont from '@/components/iconfont';
 import LoginForm, { type LoginType } from '@/components/login-form';
 import SwitchLanguage from '@/components/switch-language';

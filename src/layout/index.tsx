@@ -6,7 +6,7 @@ import { Layout } from 'antd';
 import { useOutlet } from 'react-router-dom';
 import LayoutFooter from './footer';
 import LayoutHeader from './header';
-import styles from './index.less';
+import * as styles from './index.less';
 import Logo from './logo';
 import LayoutMenu from './menu';
 

@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import localizable, { interpolateString } from '@app/locales';
 import { LinkWithMenuId } from '@moneko/react';
 import { Button, Checkbox, Form, Input } from 'antd';
-import styles from './index.less';
+import * as styles from './index.less';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
 import IconFont from '@/components/iconfont';

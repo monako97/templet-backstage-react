@@ -1,7 +1,7 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 import localizable, { interpolateString } from '@app/locales';
 import { Button, Form, Input, message } from 'antd';
-import styles from './index.less';
+import * as styles from './index.less';
 import type { ForgotPassWordParams } from '@/services/user';
 import Email, { isEmail } from '@/components/email';
 import IconFont from '@/components/iconfont';

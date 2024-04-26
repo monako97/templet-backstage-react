@@ -1,6 +1,6 @@
 import React from 'react';
 import localizable from '@app/locales';
-import styles from './index.less';
+import * as styles from './index.less';
 import { account } from '@/store/account';
 
 const Home: React.FC = () => {

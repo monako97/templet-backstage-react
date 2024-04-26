@@ -1,7 +1,7 @@
 import React from 'react';
 import app from '@app/info';
 import { Layout } from 'antd';
-import styles from './index.less';
+import * as styles from './index.less';
 
 const year = new Date().getFullYear();
 

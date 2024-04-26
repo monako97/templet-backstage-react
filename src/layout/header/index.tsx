@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { LogoutOutlined } from '@ant-design/icons';
 import localizable from '@app/locales';
 import { Avatar, Badge, Dropdown, Layout, type MenuProps } from 'antd';
-import styles from './index.less';
+import * as styles from './index.less';
 import LayoutTabs from '../tabs';
 import SwitchLanguage from '@/components/switch-language';
 import { account } from '@/store/account';
