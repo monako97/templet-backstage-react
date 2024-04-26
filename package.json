@@ -1,6 +1,6 @@
 {
   "name": "templet-backstage-react",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "后台管理模版",
   "main": "index.js",
   "scripts": {},
@@ -13,9 +13,6 @@
     "@moneko/common": "1.2.0",
     "antd": "5.8.4",
     "qiankun": "2.10.13"
-  },
-  "resolutions": {
-    "terser": "npm:@swc/core"
   },
   "files": [
     "config",
