@@ -1,8 +1,17 @@
 import type { ConfigType } from 'PackageNameByCore';
 
 const conf: Partial<ConfigType> = {
+  htmlPluginOption: {
+    meta: {
+      'theme-color': '#001529',
+    },
+    tags: [
+      { tag: 'script', src: 'micro.entry.js', defer: false },
+      { tag: 'script', src: 'micro-rule.entry.js', defer: false },
+    ],
+  },
   copy: {
-    dirs: ['public']
+    dirs: ['public'],
   },
   fallbackCompPath: '@/components/fallback',
   importOnDemand: {
@@ -11,14 +20,6 @@ const conf: Partial<ConfigType> = {
     },
     lodash: {
       transform: '${member}',
-    },
-  },
-  proxy: {
-    '/api/': {
-      target: 'http://127.0.0.1:8001/',
-      changeOrigin: true,
-      pathRewrite: { '^/api/': '/' },
-      secure: false,
     },
   },
 };

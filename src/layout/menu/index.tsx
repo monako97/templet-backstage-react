@@ -1,8 +1,7 @@
 import React, { isValidElement, useCallback, useEffect, useMemo } from 'react';
 import localizable from '@app/locales';
-import { LinkWithMenuId } from '@moneko/react';
+import { LinkWithMenuId, useSearchParams } from '@moneko/react';
 import { Menu, type MenuProps } from 'antd';
-import { useSearchParams } from 'react-router-dom';
 import IconFont from '@/components/iconfont';
 import menu, { type MenuItem, expandMenu } from '@/store/menu';
 
