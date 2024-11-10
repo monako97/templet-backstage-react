@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import localizable, { interpolateString } from '@app/locales';
-import { LinkWithMenuId } from '@moneko/react';
+import { Link } from '@moneko/react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import * as styles from './index.less';
 import type { LoginByEmailParams, LoginByUserNameParams } from '@/services/user';
@@ -95,9 +95,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
         <Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>{t.remember}</Checkbox>
         </Item>
-        <LinkWithMenuId className={styles.loginFormForgot} to="/forgot-password">
+        <Link className={styles.loginFormForgot} to="/forgot-password">
           {t['forgot-password']}
-        </LinkWithMenuId>
+        </Link>
       </Item>
       <Button
         type="primary"

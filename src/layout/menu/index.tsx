@@ -1,6 +1,6 @@
 import React, { isValidElement, useCallback, useEffect, useMemo } from 'react';
 import localizable from '@app/locales';
-import { LinkWithMenuId, useSearchParams } from '@moneko/react';
+import { Link, useSearchParams } from '@moneko/react';
 import { Menu, type MenuProps } from 'antd';
 import IconFont from '@/components/iconfont';
 import menu, { type MenuItem, expandMenu } from '@/store/menu';
@@ -37,9 +37,9 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
             icon: isValidElement(icon) ? icon : icon ? <IconFont type={icon} /> : null,
             label:
               path && !childrens?.length ? (
-                <LinkWithMenuId preventScrollReset to={`${id}?menuId=${id}`}>
+                <Link preventScrollReset to={`${id}?menuId=${id}`}>
                   {text}
-                </LinkWithMenuId>
+                </Link>
               ) : (
                 text
               ),

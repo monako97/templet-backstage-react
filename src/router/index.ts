@@ -1,5 +1,4 @@
-import { lazy } from 'react';
-import { RouteConfig } from '@app/routes';
+import { lazy, type RouteConfig } from '@app/routes';
 import { Navigate } from '@moneko/react';
 
 const routers: RouteConfig[] = [

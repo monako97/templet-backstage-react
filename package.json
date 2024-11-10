@@ -1,6 +1,6 @@
 {
   "name": "templet-backstage-react",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "后台管理模版",
   "main": "index.js",
   "scripts": {},
@@ -13,7 +13,7 @@
     "@ant-design/icons": "5.3.7",
     "@moneko/common": "1.5.4",
     "antd": "5.18.1",
-    "shared-store-object": "^1.1.1",
+    "shared-store-object": "1.1.4",
     "qiankun": "2.10.16"
   },
   "files": [
