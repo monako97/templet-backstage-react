@@ -1,5 +1,6 @@
 import { lazy, type RouteConfig } from '@app/routes';
 import { Navigate } from '@moneko/react';
+import { createElement } from 'react';
 
 const routers: RouteConfig[] = [
   {
@@ -47,11 +48,21 @@ const routers: RouteConfig[] = [
         path: '',
         hideTabs: true,
         hideMenu: true,
-        element: Navigate,
-        metadata: {
+        onlyLogin: true,
+        element: createElement(Navigate, {
+          to: '/login?menuId=login',
+          replace: true,
+        }),
+      },
+      {
+        path: '',
+        hideTabs: true,
+        hideMenu: true,
+        onlyLogin: true,
+        element: createElement(Navigate, {
           to: '/home?menuId=home',
           replace: true,
-        },
+        }),
       },
     ],
   },

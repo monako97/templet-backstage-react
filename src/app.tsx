@@ -1,14 +1,16 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
 import app from '@app/info';
 import { watermark } from '@moneko/common';
-import { useLocation, useNavigate, useOutlet } from '@moneko/react';
+import { useLocation, useNavigate, useOutlet, Navigate } from '@moneko/react';
 import { ConfigProvider } from 'antd';
+
 import LoadMicro from '@/components/load-micro';
-import '@/global.less';
 import Dashboard from '@/layout';
 import { account } from '@/store/account';
 import { global } from '@/store/global';
 import menu, { type MenuItem, setMenu } from '@/store/menu';
+
+import '@/global.less';
 
 const appRule = window.__MicroAppActiveRule__.map((item) => {
   return {
@@ -87,7 +89,6 @@ const App = () => {
       });
     } else {
       setMenu([]);
-      navigate('/login?menuId=login');
     }
   }, [isLogin, navigate]);
 
@@ -104,8 +105,15 @@ const App = () => {
   );
 
   return (
-    <ConfigProvider prefixCls={app.prefixCls} iconPrefixCls={app.iconPrefixCls}>
-      {isLogin ? <Dashboard>{view}</Dashboard> : view}
+    <ConfigProvider prefixCls={app.prefixCls}>
+      {isLogin ? (
+        <Dashboard>{view}</Dashboard>
+      ) : (
+        <>
+          <Navigate to="/login?menuId=login" replace />
+          {view}
+        </>
+      )}
     </ConfigProvider>
   );
 };
