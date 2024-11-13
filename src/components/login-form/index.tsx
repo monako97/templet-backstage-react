@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import localizable, { interpolateString } from '@app/locales';
+import localizable, { template } from '@app/locales';
 import { Link } from '@moneko/react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import * as styles from './index.less';
@@ -56,7 +56,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ type }: LoginFormProps) => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  interpolateString(t['ph:len-range'], {
+                  template(t['ph:len-range'], {
                     val: '4-10',
                   }),
                 );
