@@ -1,5 +1,5 @@
 import React, { ReactNode, useCallback, useEffect, useState } from 'react';
-import localizable, { interpolateString } from '@app/locales';
+import localizable, { template } from '@app/locales';
 import { Button, Form, Input, message } from 'antd';
 import * as styles from './index.less';
 import type { ForgotPassWordParams } from '@/services/user';
@@ -80,7 +80,7 @@ const ForgotPassword: React.FC = () => {
 
   const getVCText = useCallback(
     (num = 0): ReactNode => {
-      return interpolateString(t['get-verify-code-time'], {
+      return template(t['get-verify-code-time'], {
         val: Math.ceil((num / 100) * 60),
       });
     },
