@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
 import localizable, { locales, setLang } from '@app/locales';
 import { Dropdown, type MenuProps, Typography } from 'antd';
-import * as styles from './index.less';
+
 import IconFont from '@/components/iconfont';
+
+import * as styles from './index.less';
 
 interface SwitchLanguageProps {
   className?: string;

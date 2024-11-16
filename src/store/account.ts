@@ -1,15 +1,7 @@
-import { isFunction, persistence } from '@moneko/common';
+import { persistence } from '@moneko/common';
 import sso from 'shared-store-object';
-import type { ResponseBody } from '@/services';
-import {
-  type ForgotPassWordParams,
-  type LoginByEmailParams,
-  type LoginByUserNameParams,
-  changePassword,
-  getForgetVerifyCode,
-  loginByEmail,
-  loginByUserName,
-} from '@/services/user';
+
+import { loginByEmail, loginByUserName, type LoginParams } from '@/services/user';
 import { global } from '@/store/global';
 
 export interface UserInfo {
@@ -31,59 +23,49 @@ export interface UserInfo {
   username: string;
 }
 
-// eslint-disable-next-line no-unused-vars
-type Callback<V> = (resp: ResponseBody<V>) => void;
 /** 数据持久化key */
 export const accountPersistenceKey = 'account.info';
 export const account = sso({
   /** 用户信息, 默认值：读取持久化数据 */
-  info: persistence.load<UserInfo | null>(accountPersistenceKey, null),
+  info: persistence.load<UserInfo | undefined>(accountPersistenceKey, {} as UserInfo),
+  /** 是否正在登录 */
+  logining: false,
   /** 登出账号
    * @constructor
    */
   logout() {
     localStorage.clear();
-    account.info = null;
+    account.info = void 0;
     global.isLogin = false;
   },
-  async loginUsername(data: LoginByUserNameParams, callback: Callback<UserInfo>) {
-    const resp = await loginByUserName(data);
+  async login(data: LoginParams) {
+    account.logining = true;
+    const isEmail = !!data.email;
 
-    if (resp.success) {
-      account.info = resp.result;
-      global.isLogin = true;
-    }
-    if (isFunction(callback)) {
-      callback(resp);
-      return;
-    }
-  },
-  async loginEmail(data: LoginByEmailParams, callback: Callback<UserInfo>) {
-    const resp = await loginByEmail(data);
+    try {
+      const resp = await (isEmail ? loginByEmail : loginByUserName)(data);
 
-    if (resp.success) {
-      account.info = resp.result;
-      global.isLogin = true;
+      if (resp.status === 200) {
+        account.info = resp.result;
+        global.isLogin = true;
+      }
+    } catch {
+      return void 0;
     }
-    if (isFunction(callback)) {
-      callback(resp);
-      return;
-    }
+    account.logining = false;
   },
-  async forgetPassword(data: ForgotPassWordParams, callback: Callback<boolean>) {
-    const resp = await changePassword(data);
+});
 
-    if (isFunction(callback)) {
-      callback(resp);
-      return;
-    }
-  },
-  async fetchForgetVerifyCode(data: Record<string, string>, callback: Callback<boolean>) {
-    const resp = await getForgetVerifyCode(data);
-
-    if (isFunction(callback)) {
-      callback(resp);
-      return;
-    }
-  },
+// 持久化存储
+type AccountShared = typeof account;
+// 拦截变更进行持久化存储
+account(() => {
+  return {
+    next(iteration: VoidFunction, key: keyof AccountShared, data: AccountShared) {
+      if (key === 'info') {
+        persistence.set(accountPersistenceKey, data[key]);
+      }
+      iteration();
+    },
+  };
 });

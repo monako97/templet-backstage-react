@@ -1,14 +1,18 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
 import app from '@app/info';
-import { watermark } from '@moneko/common';
-import { useLocation, useNavigate, useOutlet, Navigate } from '@moneko/react';
+import localizable from '@app/locales';
+import { printBanner, watermark } from '@moneko/common';
+import { Navigate, useLocation, useNavigate, useOutlet } from '@moneko/react';
 import { ConfigProvider } from 'antd';
 
 import LoadMicro from '@/components/load-micro';
 import Dashboard from '@/layout';
+import LayoutFooter from '@/layout/footer';
 import { account } from '@/store/account';
 import { global } from '@/store/global';
 import menu, { type MenuItem, setMenu } from '@/store/menu';
+
+import SwitchLanguage from './components/switch-language';
 
 import '@/global.less';
 
@@ -59,7 +63,10 @@ const useMicroApp = () => {
   };
 };
 
+printBanner(app.projectName, app.version, app.author.name, app.author.url);
+
 const App = () => {
+  const { t } = localizable;
   const { kv, activeKey } = menu;
   const { isLogin } = global;
   const { info } = account;
@@ -105,14 +112,51 @@ const App = () => {
   );
 
   return (
-    <ConfigProvider prefixCls={app.prefixCls}>
+    <ConfigProvider
+      prefixCls={app.prefixCls}
+      iconPrefixCls={`${app.prefixCls}-icon`}
+      form={{
+        validateMessages: {
+          required: `${t['ph:please-fill']}\${label}!`,
+          types: {
+            email: `\${label}${t['wrong-format']}`,
+          },
+          pattern: {
+            mismatch: `${t['ph:fill-correct']}\${label}!`,
+          },
+        },
+      }}
+      theme={{
+        cssVar: true,
+        token: {
+          colorBgLayout: '#f0f2f5',
+          borderRadius: 16,
+          /* 这里是你的全局 token */
+          colorPrimary: '#5996ff',
+          colorWarning: '#f9a913',
+          colorSuccess: '#52c11b',
+          colorError: '#ff4f51',
+          fontFamily:
+            "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji',Helvetica,Oxygen,Ubuntu,Cantarell,'Fira Sans','Droid Sans'",
+        },
+        components: {
+          Form: {
+            /* 这里是你的组件 token */
+          },
+        },
+      }}
+    >
       {isLogin ? (
         <Dashboard>{view}</Dashboard>
       ) : (
-        <>
+        <React.Fragment>
           <Navigate to="/login?menuId=login" replace />
+          <div className="toolbox">
+            <SwitchLanguage />
+          </div>
           {view}
-        </>
+          <LayoutFooter />
+        </React.Fragment>
       )}
     </ConfigProvider>
   );

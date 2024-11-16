@@ -13,13 +13,39 @@ const conf: Partial<ConfigType> = {
   copy: {
     dirs: ['public'],
   },
+  /** 虚拟模块 */
+  virtualModule: {
+    /**
+     * 创建一个安全模块
+     * 可以用来存放一些需要加密处理的密钥
+     * @example
+     * import security from '@app/security';
+     * console.log(security.PUBLIC_KEY);
+     */
+    '@app/security': {
+      /** 公钥 */
+      PUBLIC_KEY: 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCS701BrXHlWB9tDgZpJ',
+      /** 私钥 */
+      PRIVATE_KEY:
+        'MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBAJLvTUGtceVYH20OBmkn601zRTD0cJlTaUQ4',
+    },
+  },
+  // 路由懒加载发生时使用的 fallback
   fallbackCompPath: '@/components/fallback',
+  // 按需引入
   importOnDemand: {
     '@moneko/common': {
       transform: 'lib/${member}',
     },
     lodash: {
       transform: '${member}',
+    },
+    '@ant-design/icons': {
+      transform: 'es/icons/${member}',
+    },
+    antd: {
+      transform: 'es/${member}',
+      memberTransformers: ['dashed_case'],
     },
   },
 };

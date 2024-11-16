@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
+import type { RouteConfig } from '@app/routes';
 import { isEqual, isFunction, persistence } from '@moneko/common';
 import sso from 'shared-store-object';
-import type { RouteConfig } from '@app/routes';
 
 export type CloseTab = 'left' | 'right' | 'other' | 'self';
 export interface TabItem extends Omit<RouteConfig, 'path'> {
@@ -15,25 +15,49 @@ export interface TabItem extends Omit<RouteConfig, 'path'> {
 export interface MenuItem extends RouteConfig {
   key: string;
   type?: string;
+  disabled?: boolean;
+  itemIcon?: ReactNode;
   children?: MenuItem[];
 }
-// eslint-disable-next-line no-unused-vars
+
 type ClosedCallback = (closes?: TabItem[], next?: TabItem) => void;
 
-const load = persistence.load;
+const activeKeyPersistenceKey = 'menu.activeKey';
+const expandKeyPersistenceKey = 'menu.expandKey';
 
 /** Menu Store */
 export const menu = sso({
   /** 当前菜单 */
-  activeKey: load('menu.activeKey', 'home'),
+  activeKey: persistence.load(activeKeyPersistenceKey, 'home'),
   /** 展开菜单的key[] */
-  expandKey: load('menu.expandKey', [] as string[]),
+  expandKey: persistence.load(expandKeyPersistenceKey, [] as string[]),
   /** 当前用户可访问的菜单列表 */
-  menus: load('menu.menus', [] as MenuItem[]),
+  menus: persistence.load('menu.menus', [] as MenuItem[]),
   /** 菜单列表的kv数据, 根据menus自动生成 */
-  kv: load('menu.kv', {} as Record<string, MenuItem>),
+  kv: persistence.load('menu.kv', {} as Record<string, MenuItem>),
   /** 选项卡数据 */
-  tabs: load('menu.tabs', [] as TabItem[]),
+  tabs: persistence.load('menu.tabs', [] as TabItem[]),
+});
+
+// 持久化存储
+type MenuShared = typeof menu;
+// 拦截变更进行持久化存储
+menu(() => {
+  return {
+    next(iteration: VoidFunction, key: keyof MenuShared, data: MenuShared) {
+      switch (key) {
+        case 'activeKey':
+          persistence.set(activeKeyPersistenceKey, data[key]);
+          break;
+        case 'expandKey':
+          persistence.set(expandKeyPersistenceKey, data[key]);
+          break;
+        default:
+          break;
+      }
+      iteration();
+    },
+  };
 });
 
 const getItems = (arr: MenuItem[], result: MenuItem[] = []): MenuItem[] => {

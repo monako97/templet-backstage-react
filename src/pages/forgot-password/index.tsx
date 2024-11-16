@@ -1,155 +1,153 @@
-import React, { ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import localizable, { template } from '@app/locales';
-import { Button, Form, Input, message } from 'antd';
-import * as styles from './index.less';
-import type { ForgotPassWordParams } from '@/services/user';
-import Email, { isEmail } from '@/components/email';
+import { Button, Form, message, Typography } from 'antd';
+import CustomForm from 'custom-form-ant';
+
+import GoBack from '@/components/go-back';
 import IconFont from '@/components/iconfont';
-import InputPassword from '@/components/input-password';
+import { changePassword, type ForgotPassWordParams, getForgetVerifyCode } from '@/services/user';
 import { account } from '@/store/account';
+import { isEmail } from '@/utils';
+
+import * as styles from './index.less';
 
 const PASSWORD_RegExp = /^(\w){6,16}$/;
-const { Item } = Form;
-
-let getVCTimer: number | null,
-  second = 60;
 const ForgotPassword: React.FC = () => {
   const { t } = localizable;
-  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [vcLoading, setVCLoading] = useState(false);
-  const [getVC, setGetVC] = useState(false);
-  const [percent, setPercent] = useState<number>(100);
+  const [vcLoading, setVcLoading] = useState(false);
+  const [vcSuccess, setVcSuccess] = useState(false);
+  const [second, setSecond] = useState<number>(60);
+  const [form] = Form.useForm();
+  const email = Form.useWatch('email', form);
 
-  const onFinish = useCallback((values: ForgotPassWordParams) => {
+  const onFinish = useCallback(async (values: ForgotPassWordParams) => {
     setLoading(true);
-    account.forgetPassword(values, (resp) => {
-      if (resp.success) {
+    try {
+      const resp = await changePassword(values);
+
+      if (resp.status === 200) {
         message.success(resp.message);
-        setLoading(false);
         account.logout();
-      } else {
-        message.error(resp.message);
-        setLoading(false);
-        setGetVC(false);
       }
-    });
-  }, []);
-
-  const getVerifyCode = useCallback(() => {
-    setVCLoading(true);
-    account.fetchForgetVerifyCode(form.getFieldsValue(), (resp) => {
-      if (resp.success) {
-        message.success(resp.message);
-        setVCLoading(false);
-        setGetVC(true);
-      } else {
-        message.error(resp.message);
-        setVCLoading(false);
-      }
-    });
-  }, [form]);
-
-  useEffect(() => {
-    second = 60;
-    setPercent(100);
-    if (getVC && typeof getVCTimer !== 'number') {
-      getVCTimer = window.setInterval(() => {
-        if (second > 0) {
-          second--;
-          setPercent((second / 60) * 100);
-        } else {
-          setGetVC(false);
-          if (typeof getVCTimer === 'number') {
-            window.clearInterval(getVCTimer);
-            getVCTimer = null;
-          }
-        }
-      }, 1000);
+    } catch {
+      void 0;
     }
-  }, [getVC]);
-
-  useEffect(() => {
-    return () => {
-      if (typeof getVCTimer === 'number') {
-        window.clearInterval(getVCTimer);
-        getVCTimer = null;
-      }
-    };
+    setLoading(false);
+    setVcSuccess(false);
   }, []);
 
-  const getVCText = useCallback(
-    (num = 0): ReactNode => {
-      return template(t['get-verify-code-time'], {
-        val: Math.ceil((num / 100) * 60),
+  const getVerifyCode = useCallback(async () => {
+    setVcLoading(true);
+
+    try {
+      const resp = await getForgetVerifyCode(email);
+
+      if (resp.status === 200) {
+        message.success(resp.message);
+        setVcSuccess(true);
+      }
+    } catch {
+      void 0;
+    }
+    setVcLoading(false);
+  }, [email]);
+
+  useEffect(() => {
+    if (!vcSuccess) return;
+    setSecond(60);
+    const getVCTimer = window.setInterval(() => {
+      setSecond((prev) => {
+        if (prev <= 1) {
+          setVcSuccess(false);
+          window.clearInterval(getVCTimer);
+          return 0;
+        }
+        return prev - 1;
       });
-    },
-    [t],
-  );
+    }, 1000);
+
+    return () => window.clearInterval(getVCTimer);
+  }, [vcSuccess]);
 
   return (
     <div className={styles.forgot}>
-      <p className={styles.title}>{t['forgot-password']}</p>
-      <Form
-        name="forgot"
+      <Typography.Title className={styles.title}>{t['forgot-password']}</Typography.Title>
+      <CustomForm
         form={form}
-        className={styles.forgotForm}
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
+        name="forgot"
         autoComplete="off"
-        layout="vertical"
-      >
-        <Item
-          name="email"
-          label={t.email}
-          rules={[
-            { required: true },
-            () => ({
-              validator(_rule, value) {
-                if (isEmail(value)) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(t['ph:validator-email']);
+        variant="filled"
+        className={styles.forgotForm}
+        disabled={loading}
+        onFinish={onFinish}
+        labelCol={{ span: 0 }}
+        wrapperCol={{}}
+        config={{
+          email: {
+            type: 'email',
+            label: t.email,
+            colProps: { span: 24 },
+            rules: [
+              {
+                validator(_, str) {
+                  return isEmail(str) ? Promise.resolve() : Promise.reject(t['ph:validator-email']);
+                },
               },
-            }),
-          ]}
-          hasFeedback
-        >
-          <Email placeholder={t['ph:email']} />
-        </Item>
-        <Item shouldUpdate={true}>
-          {() => (
-            <Item label={t['verify-code']} name="verify_code" rules={[{ required: true }]}>
-              <Input
-                prefix={<IconFont type="icon-verification" />}
-                placeholder={t['verify-code']}
-                disabled={!isEmail(form.getFieldValue('email'))}
-                addonAfter={
-                  <Button
-                    onClick={getVerifyCode}
-                    loading={vcLoading}
-                    disabled={!isEmail(form.getFieldValue('email')) || getVC}
-                  >
-                    {getVC ? getVCText(percent) : t['get-verify-code']}
-                  </Button>
-                }
-              />
-            </Item>
-          )}
-        </Item>
-        <Item
-          label={t['new-password']}
-          name="password"
-          rules={[{ required: true, pattern: PASSWORD_RegExp }]}
-        >
-          <InputPassword placeholder={t['new-password']} />
-        </Item>
-        <Item>
-          <Button type="primary" htmlType="submit" className={styles.submit} loading={loading}>
-            {t['password']}
-          </Button>
-        </Item>
-      </Form>
+            ],
+            hasFeedback: true,
+            props: {
+              prefix: <IconFont type="icon-email" />,
+              placeholder: t['ph:email'],
+            },
+          },
+          verify_code: {
+            type: 'search',
+            label: t['verify-code'],
+            rules: [{ required: true }],
+            colProps: { span: 24 },
+            hasFeedback: true,
+            props: {
+              prefix: <IconFont type="icon-verification" />,
+              placeholder: t['verify-code'],
+              disabled: !vcSuccess,
+              enterButton: (
+                <Button
+                  onClick={getVerifyCode}
+                  loading={vcLoading}
+                  disabled={!isEmail(email) || vcSuccess}
+                  type="text"
+                >
+                  {vcSuccess
+                    ? template(t['get-verify-code-time'], { second })
+                    : t['get-verify-code']}
+                </Button>
+              ),
+            },
+          },
+          password: {
+            type: 'password',
+            label: t['new-password'],
+            colProps: { span: 24 },
+            rules: [{ required: true, pattern: PASSWORD_RegExp }],
+            hasFeedback: true,
+            props: {
+              prefix: <IconFont type="icon-password" />,
+              placeholder: t['new-password'],
+              iconRender: (v: boolean) => <IconFont type={v ? 'icon-visible' : 'icon-invisible'} />,
+            },
+          },
+        }}
+        submitter={{
+          submitText: t['route-password'],
+          resetText: false,
+          submitProps: {
+            block: true,
+            loading: loading,
+          },
+          extra: <GoBack className={styles.goBack} />,
+        }}
+      />
     </div>
   );
 };

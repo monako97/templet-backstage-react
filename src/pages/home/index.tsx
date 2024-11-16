@@ -1,13 +1,17 @@
 import React from 'react';
 import localizable from '@app/locales';
-import * as styles from './index.less';
+
+import Marquee from '@/components/marquee';
 import { account } from '@/store/account';
+
+import * as styles from './index.less';
 
 const Home: React.FC = () => {
   const { t } = localizable;
 
   return (
     <React.Fragment>
+      <Marquee>公告: 这是一段弹幕</Marquee>
       <div className={styles.details}>
         <details>
           <summary>{t['user-info']}</summary>

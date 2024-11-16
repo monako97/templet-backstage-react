@@ -1,17 +1,20 @@
-import * as styles from './index.less';
 import React, { type FC, type ReactNode, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import app from '@app/info';
-import localizable from '@app/locales';
 import { useOutlet } from '@moneko/react';
 import { Layout } from 'antd';
+
+import { global } from '@/store/global';
+
 import LayoutFooter from './footer';
 import LayoutHeader from './header';
 import Logo from './logo';
 import LayoutMenu from './menu';
 
+import * as styles from './index.less';
+
 const DashboardLayout: FC<{ children?: ReactNode }> = ({ children }) => {
-  const { t } = localizable;
+  const { theme } = global;
   const outlet = useOutlet();
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
@@ -19,30 +22,18 @@ const DashboardLayout: FC<{ children?: ReactNode }> = ({ children }) => {
     <Layout className={styles.layout}>
       <Layout.Sider
         className={styles.sider}
-        trigger={
-          collapsed ? (
-            <div className={styles.trigger}>
-              <MenuUnfoldOutlined />
-              {t.open}
-            </div>
-          ) : (
-            <div className={styles.trigger}>
-              <MenuFoldOutlined />
-              {t.collapse}
-            </div>
-          )
-        }
+        trigger={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         collapsible
         collapsed={collapsed}
         onBreakpoint={setCollapsed}
         onCollapse={setCollapsed}
-        theme="dark"
+        theme={theme}
         breakpoint="md"
       >
         <div className={styles.logo} data-title={app.name}>
           <Logo collapsed={collapsed} />
         </div>
-        <LayoutMenu collapsed={collapsed} theme="dark" />
+        <LayoutMenu collapsed={collapsed} theme={theme} />
       </Layout.Sider>
       <Layout className={styles.section}>
         <LayoutHeader />

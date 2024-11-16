@@ -1,6 +1,7 @@
 import React from 'react';
 import app from '@app/info';
 import { Typography } from 'antd';
+
 import * as styles from './index.less';
 
 const Logo = ({ collapsed }: { collapsed: boolean }) => {

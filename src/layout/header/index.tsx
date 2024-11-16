@@ -2,10 +2,13 @@ import React, { useMemo } from 'react';
 import { LogoutOutlined } from '@ant-design/icons';
 import localizable from '@app/locales';
 import { Avatar, Badge, Dropdown, Layout, type MenuProps } from 'antd';
-import * as styles from './index.less';
-import LayoutTabs from '../tabs';
+
 import SwitchLanguage from '@/components/switch-language';
 import { account } from '@/store/account';
+
+import LayoutTabs from '../tabs';
+
+import * as styles from './index.less';
 
 const LayoutHeader = () => {
   const { t } = localizable;
@@ -31,7 +34,7 @@ const LayoutHeader = () => {
         <Dropdown menu={{ items }} placement="bottom">
           <div className={styles.user}>
             <Badge count={0}>
-              <Avatar src={account.info?.avatar} />
+              <Avatar src={account.info?.avatar}>{account.info?.username}</Avatar>
             </Badge>
             <span className={styles.username}>{account.info?.username}</span>
           </div>

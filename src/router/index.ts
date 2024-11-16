@@ -1,6 +1,4 @@
 import { lazy, type RouteConfig } from '@app/routes';
-import { Navigate } from '@moneko/react';
-import { createElement } from 'react';
 
 const routers: RouteConfig[] = [
   {
@@ -14,12 +12,18 @@ const routers: RouteConfig[] = [
       },
       {
         path: 'forgot-password',
+        // 不显示在菜单中
         hideMenu: true,
       },
       {
         path: 'home',
-        closable: false,
+        // 不允许关闭
         icon: 'icon-home-nav',
+        closable: false,
+      },
+      {
+        path: 'about',
+        icon: 'icon-zh_CN',
       },
       {
         path: 'app-one',
@@ -37,32 +41,9 @@ const routers: RouteConfig[] = [
       },
       {
         path: 'refresh',
+        // 不显示在tabs中
         hideTabs: true,
         hideMenu: true,
-      },
-      ...Array.from({ length: 20 }, (_, i) => ({
-        path: `forgot-${i + 1}`,
-        icon: 'icon-password',
-      })),
-      {
-        path: '',
-        hideTabs: true,
-        hideMenu: true,
-        onlyLogin: true,
-        element: createElement(Navigate, {
-          to: '/login?menuId=login',
-          replace: true,
-        }),
-      },
-      {
-        path: '',
-        hideTabs: true,
-        hideMenu: true,
-        onlyLogin: true,
-        element: createElement(Navigate, {
-          to: '/home?menuId=home',
-          replace: true,
-        }),
       },
     ],
   },

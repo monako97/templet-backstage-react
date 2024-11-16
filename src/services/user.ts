@@ -1,37 +1,37 @@
-import { type ResponseBody, request } from '@/services';
-import { type UserInfo } from '@/store/account';
+import { request, type ResponseBody } from '@moneko/request';
 
-export type LoginByUserNameParams = {
-  username: string;
-  password: string;
-};
-export type LoginByEmailParams = {
-  email: string;
-  password: string;
-};
+import type { UserInfo } from '@/store/account';
 
-export type ForgotPassWordParams = LoginByEmailParams & {
-  verify_code: string;
+export type LoginParams = {
+  username?: string;
+  email?: string;
+  password: string;
 };
 
 // 用户名登录
-export const loginByUserName = async (params: LoginByUserNameParams) =>
+export const loginByUserName = async (params: LoginParams) =>
   request<ResponseBody<UserInfo>>('/login_by_username', {
     data: params,
     method: 'POST',
   });
 // email登录
-export const loginByEmail = async (params: LoginByEmailParams) =>
+export const loginByEmail = async (params: LoginParams) =>
   request<ResponseBody<UserInfo>>('/login_by_email', {
     data: params,
     method: 'POST',
   });
+
+export type ForgotPassWordParams = LoginParams & {
+  verify_code: string;
+  email: string;
+};
+
 // 修改密码
-export const changePassword = async (params: LoginByEmailParams) =>
-  request<ResponseBody<boolean>>('/change-password', {
+export const changePassword = async (params: ForgotPassWordParams) =>
+  request<ResponseBody<boolean>>('/forget_password', {
     data: params,
     method: 'POST',
   });
 // 获取验证码
-export const getForgetVerifyCode = async (data: Record<string, string>) =>
-  request<ResponseBody<boolean>>('/forget-verify-code', { data });
+export const getForgetVerifyCode = async (email: string) =>
+  request<ResponseBody<boolean>>('/forget_pwd_verify_code', { method: 'POST', data: { email } });

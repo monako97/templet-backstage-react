@@ -2,8 +2,9 @@ import React, { isValidElement, useCallback, useEffect, useMemo } from 'react';
 import localizable from '@app/locales';
 import { Link, useSearchParams } from '@moneko/react';
 import { Menu, type MenuProps } from 'antd';
+
 import IconFont from '@/components/iconfont';
-import menu, { type MenuItem, expandMenu } from '@/store/menu';
+import menu, { expandMenu, type MenuItem } from '@/store/menu';
 
 export interface LayoutMenuProps extends MenuProps {
   collapsed?: boolean;
@@ -15,15 +16,15 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
   const { t } = localizable;
   const [search] = useSearchParams();
   const filterMenu = useCallback(
-    (list: MenuItem[], parentId?: string): MenuProps['items'] => {
+    (list: MenuItem[], parentId?: string): MenuItem[] => {
       return list.map((item) => {
-        const { icon, itemIcon, disabled, type, key, path, label, children } = item;
-        const id = [parentId, key].filter(Boolean).join('/');
+        const { icon, itemIcon, disabled, type, path, label, children } = item;
+        const id = [parentId, path].filter(Boolean).join('/');
 
         const text = t[id] || label || id;
         const childrens = Array.isArray(children) ? filterMenu(children, id) : children;
 
-        return Object.assign(
+        return Object.assign<Omit<MenuItem, 'icon'> & { icon?: unknown }, Partial<MenuItem>>(
           {
             path,
             type,
@@ -32,9 +33,9 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
             itemIcon: isValidElement(itemIcon) ? (
               itemIcon
             ) : itemIcon ? (
-              <IconFont type={itemIcon} />
+              <IconFont type={itemIcon as string} />
             ) : null,
-            icon: isValidElement(icon) ? icon : icon ? <IconFont type={icon} /> : null,
+            icon: isValidElement(icon) ? icon : icon ? <IconFont type={icon} /> : void 0,
             label:
               path && !childrens?.length ? (
                 <Link preventScrollReset to={`${id}?menuId=${id}`}>
@@ -44,9 +45,11 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
                 text
               ),
           },
-          childrens?.length && {
-            children: childrens,
-          },
+          childrens?.length
+            ? ({
+                children: childrens,
+              } as MenuItem)
+            : {},
         );
       });
     },
@@ -54,8 +57,8 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
   );
 
   const menuId = useMemo(() => search.get('menuId'), [search]);
-  const items = useMemo<MenuProps['items']>(
-    () => filterMenu(menus.filter((m) => !m.hideMenu)),
+  const items = useMemo(
+    () => filterMenu(menus.filter((m) => !m.hideMenu)) as MenuProps['items'],
     [filterMenu, menus],
   );
   const selectedKeys = useMemo(() => (activeKey ? [activeKey] : []), [activeKey]);

@@ -3,10 +3,12 @@ import { CloseOutlined, DeleteRowOutlined, ReloadOutlined } from '@ant-design/ic
 import localizable from '@app/locales';
 import { useNavigate, useSearchParams } from '@moneko/react';
 import { Dropdown, Tabs } from 'antd';
-import * as styles from './index.less';
-import type { MenuItemType } from 'antd/es/menu/hooks/useItems';
+import type { MenuItemType } from 'antd/es/menu/interface';
+
 import IconFont from '@/components/iconfont';
-import { CloseTab, TabItem, closeTab, menu, openTab } from '@/store/menu';
+import { type CloseTab, closeTab, menu, openTab, type TabItem } from '@/store/menu';
+
+import * as styles from './index.less';
 
 const closeTabs: ({ key: CloseTab | 'refresh' } & Omit<MenuItemType, 'key'>)[] = [
   {

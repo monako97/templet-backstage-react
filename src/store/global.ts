@@ -1,13 +1,19 @@
 import routes from '@app/routes';
 import { isFunction, persistence } from '@moneko/common';
 import sso from 'shared-store-object';
+
 import { type MenuItem, setMenu } from './menu';
 
+import '@/services';
+
 /** 持久化数据key */
-export const globalPersistenceKey = 'global.isLogin';
+const isLoginPersistenceKey = 'isLogin';
+const themePersistenceKey = 'theme';
+
 export const global = sso({
   /** 是否已登录用户, 默认值：读取持久化数据 */
-  isLogin: persistence.load(globalPersistenceKey, false),
+  isLogin: persistence.load(isLoginPersistenceKey, false),
+  theme: persistence.load<'light' | 'dark'>(themePersistenceKey, 'dark'),
   /** 请求菜单数据
    * @param {Void} callback 成功回调
    * @constructor
@@ -18,10 +24,8 @@ export const global = sso({
     const localMenus = (routes[0].children || []).reduce((acc: MenuItem[], item) => {
       if (!item.key?.includes('/')) {
         acc.push({
-          alive: item.alive,
           hideMenu: item.hideMenu,
           hideTabs: item.hideTabs,
-          i18n: item.i18n,
           key: item.key!,
           path: item.path,
           icon: item.icon,
@@ -39,4 +43,21 @@ export const global = sso({
       return;
     }
   },
+});
+
+// 持久化存储
+type GlobalShared = typeof global;
+// 拦截变更进行持久化存储
+global(() => {
+  return {
+    next(iteration: VoidFunction, key: keyof GlobalShared, data: GlobalShared) {
+      if (key === 'isLogin') {
+        persistence.set(isLoginPersistenceKey, data[key]);
+      }
+      if (key === 'theme') {
+        persistence.set(themePersistenceKey, data[key]);
+      }
+      iteration();
+    },
+  };
 });

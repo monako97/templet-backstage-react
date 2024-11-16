@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import localizable from '@app/locales';
 import { message } from 'antd';
-import { type MicroApp, addGlobalUncaughtErrorHandler, loadMicroApp } from 'qiankun';
+import { addGlobalUncaughtErrorHandler, loadMicroApp, type MicroApp } from 'qiankun';
 
-addGlobalUncaughtErrorHandler((event) => message.error(event.toString()));
+addGlobalUncaughtErrorHandler((err) => {
+  message.error(err.reason.message);
+});
 
 type LoginAppProps = {
   name?: string;
