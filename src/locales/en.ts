@@ -4,6 +4,8 @@ const en: LocaleConfig = {
   language: 'en_US',
   title: '英文',
   translation: {
+    page: 'Page',
+    'sub-page': 'Sub Page',
     home: 'Home',
     'change-password': 'Change password',
     'forgot-password': 'Forgot password',
@@ -19,6 +21,8 @@ const en: LocaleConfig = {
     password: 'Password',
     remember: 'Remember',
     about: 'About',
+    'about/scas': 'sub page scas',
+    'about/ass': 'sub page ass',
     unknown: 'Unknown',
     reincarnation: 'Reincarnation',
     'verify-code': 'Verify Code',

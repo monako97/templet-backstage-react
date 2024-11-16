@@ -36,7 +36,9 @@ export const menu = sso({
   /** 菜单列表的kv数据, 根据menus自动生成 */
   kv: persistence.load('menu.kv', {} as Record<string, MenuItem>),
   /** 选项卡数据 */
-  tabs: persistence.load('menu.tabs', [] as TabItem[]),
+  tabs: persistence.load('menu.tabs', [
+    { key: 'home', path: '/home', closable: false, icon: 'icon-home-nav' },
+  ] as TabItem[]),
 });
 
 // 持久化存储
@@ -80,7 +82,7 @@ const getItems = (arr: MenuItem[], result: MenuItem[] = []): MenuItem[] => {
 const getMenuKV = (arr: MenuItem[], obj: Record<string, MenuItem>, pid?: string): void => {
   for (const item of arr) {
     const { children, ...args } = item;
-    const id = [pid, item.key].filter(Boolean).join('/');
+    const id = [pid, item.path].filter(Boolean).join('/');
 
     obj[id] = {
       label: id,

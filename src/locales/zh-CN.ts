@@ -4,6 +4,8 @@ const zhCN: LocaleConfig = {
   language: 'zh_CN',
   title: '简体中文',
   translation: {
+    page: '页面',
+    'sub-page': '子页面',
     home: '主页',
     'change-password': '修改密码',
     'forgot-password': '忘记密码',
@@ -14,6 +16,8 @@ const zhCN: LocaleConfig = {
     'app-one/home': '主页',
     jump: '跳转',
     about: '关于',
+    'about/scas': '子页面 scas',
+    'about/ass': '子页面 ass',
     unknown: '未知',
     reincarnation: '投胎中',
     email: '电子邮箱',

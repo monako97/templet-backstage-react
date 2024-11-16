@@ -16,12 +16,13 @@ import SwitchLanguage from './components/switch-language';
 
 import '@/global.less';
 
-const appRule = window.__MicroAppActiveRule__.map((item) => {
-  return {
-    ...item,
-    activeRule: item.activeRule.map((r) => `${item.basename}${r}`),
-  };
-});
+const appRule =
+  window.__MicroAppActiveRule__?.map((item) => {
+    return {
+      ...item,
+      activeRule: item.activeRule.map((r) => `${item.basename}${r}`),
+    };
+  }) || [];
 const allMicrror: string[] = appRule.map((item) => item.activeRule).flat();
 
 function pathToRegexp(path: string) {
@@ -91,7 +92,7 @@ const App = () => {
       global.fetchMenu(() => {
         // 在没有权限的路由时返回首页
         if (!menuRef.current) {
-          navigate('/home?menuId=home');
+          // navigate('/home?menuId=home');
         }
       });
     } else {

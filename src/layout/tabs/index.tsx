@@ -47,7 +47,7 @@ function LayoutTabs() {
       if (tabKey) {
         closeTab(tabKey, type, function (_?: TabItem[], next?: TabItem) {
           if (next) {
-            navigate(`${next.path}?menuId=${next.key}`);
+            navigate(`${next.key}?menuId=${next.key}`);
           }
         });
       }
