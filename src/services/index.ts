@@ -2,11 +2,11 @@ import security from '@app/security'; // 密钥使用虚拟模块
 import { extend } from '@moneko/request';
 import { message } from 'antd';
 // RSA 加密
-import { Encrypt } from 'rsa-encrypt-long';
+import Encrypt from 'rsa-encrypt-long';
 
 import { account } from '@/store/account';
 
-const encrypt = new Encrypt();
+const encrypt = new Encrypt({});
 
 encrypt.setPublicKey(security.PUBLIC_KEY);
 encrypt.setPrivateKey(security.PRIVATE_KEY);
