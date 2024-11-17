@@ -1,6 +1,6 @@
 {
   "name": "templet-backstage-react",
-  "version": "2.3.10",
+  "version": "2.3.11",
   "description": "后台管理模版",
   "main": "index.js",
   "scripts": {},
@@ -16,7 +16,7 @@
     "antd": "5.22.1",
     "custom-form-ant": "^0.1.2",
     "qiankun": "2.10.16",
-    "rsa-encrypt-long": "^3.0.4",
+    "rsa-encrypt-long": "4.0.0",
     "shared-store-object": "1.1.4"
   },
   "files": [

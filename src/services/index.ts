@@ -2,14 +2,14 @@ import security from '@app/security'; // 密钥使用虚拟模块
 import { extend } from '@moneko/request';
 import { message } from 'antd';
 // RSA 加密
-import Encrypt from 'rsa-encrypt-long';
+import { Encrypt } from 'rsa-encrypt-long';
 
 import { account } from '@/store/account';
 
-const encrypt = new Encrypt({});
-
-encrypt.setPublicKey(security.PUBLIC_KEY);
-encrypt.setPrivateKey(security.PRIVATE_KEY);
+const encrypt = new Encrypt({
+  publicKey: security.PUBLIC_KEY,
+  privateKey: security.PRIVATE_KEY,
+});
 
 /** 数据解密 */
 export const decrypt = (string: string): string | false => {
