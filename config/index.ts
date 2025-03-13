@@ -19,8 +19,8 @@ const conf: Partial<ConfigType> = {
      * 创建一个安全模块
      * 可以用来存放一些需要加密处理的密钥
      * @example
-     * import security from '@app/security';
-     * console.log(security.PUBLIC_KEY);
+     * import { PUBLIC_KEY } from '@app/security';
+     * console.log(PUBLIC_KEY);
      */
     '@app/security': {
       /** 公钥 */

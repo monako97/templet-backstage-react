@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import app from '@app/info';
+import { name } from '@app/info';
 import { useOutlet } from '@moneko/react';
 import { Layout } from 'antd';
 
@@ -30,7 +30,7 @@ const DashboardLayout: FC<{ children?: ReactNode }> = ({ children }) => {
         theme={theme}
         breakpoint="md"
       >
-        <div className={styles.logo} data-title={app.name}>
+        <div className={styles.logo} data-title={name}>
           <Logo collapsed={collapsed} />
         </div>
         <LayoutMenu collapsed={collapsed} theme={theme} />

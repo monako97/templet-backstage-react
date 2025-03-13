@@ -1,5 +1,5 @@
 import React from 'react';
-import app from '@app/info';
+import { repository, projectName, author } from '@app/info';
 import { Layout, Typography } from 'antd';
 
 import * as styles from './index.less';
@@ -10,12 +10,12 @@ const LayoutFooter: React.FC = () => {
   return (
     <Layout.Footer className={styles.footer}>
       <Typography.Text type="secondary">
-        <Typography.Link href={app.repository.url} target="_blank" rel="noopener noreferrer">
-          {app.projectName}
+        <Typography.Link href={repository.url} target="_blank" rel="noopener noreferrer">
+          {projectName}
         </Typography.Link>
         {` © ${year} Created by `}
-        <Typography.Link href={app.author.url} target="_blank" rel="noopener noreferrer">
-          {app.author.name}
+        <Typography.Link href={author.url} target="_blank" rel="noopener noreferrer">
+          {author.name}
         </Typography.Link>
       </Typography.Text>
       <Typography.Text type="secondary">

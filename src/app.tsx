@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
-import app from '@app/info';
+import { prefixCls, name, routerMode, projectName, version, author } from '@app/info';
 import localizable from '@app/locales';
 import { printBanner, watermark } from '@moneko/common';
 import { Navigate, useLocation, useNavigate, useOutlet } from '@moneko/react';
@@ -37,7 +37,7 @@ function pathToRegexp(path: string) {
   return new RegExp(`^${pattern}$`);
 }
 const useMicroApp = () => {
-  const hash = app.routerMode === 'hash' ? '/#' : '';
+  const hash = routerMode === 'hash' ? '/#' : '';
   const location = useLocation();
   const isMicro = useCallback(() => {
     const pathname = location.pathname;
@@ -64,7 +64,7 @@ const useMicroApp = () => {
   };
 };
 
-printBanner(app.projectName, app.version, app.author.name, app.author.url);
+printBanner(projectName, version, author.name, author.url);
 
 const App = () => {
   const { t } = localizable;
@@ -102,7 +102,7 @@ const App = () => {
 
   useEffect(() => {
     // 更新水印
-    watermark.update(info?.username || app.name);
+    watermark.update(info?.username || name);
   }, [info?.username]);
 
   const view = (
@@ -114,8 +114,8 @@ const App = () => {
 
   return (
     <ConfigProvider
-      prefixCls={app.prefixCls}
-      iconPrefixCls={`${app.prefixCls}-icon`}
+      prefixCls={prefixCls}
+      iconPrefixCls={`${prefixCls}-icon`}
       form={{
         validateMessages: {
           required: `${t['ph:please-fill']}\${label}!`,

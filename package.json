@@ -1,6 +1,6 @@
 {
   "name": "templet-backstage-react",
-  "version": "2.3.14",
+  "version": "2.4.0",
   "description": "后台管理模版",
   "main": "index.js",
   "scripts": {},
