@@ -34,18 +34,8 @@ const conf: Partial<ConfigType> = {
   fallbackCompPath: '@/components/fallback',
   // 按需引入
   importOnDemand: {
-    '@moneko/common': {
-      transform: 'lib/${member}',
-    },
     lodash: {
       transform: '${member}',
-    },
-    '@ant-design/icons': {
-      transform: 'es/icons/${member}',
-    },
-    antd: {
-      transform: 'es/${member}',
-      memberTransformers: ['dashed_case'],
     },
   },
 };

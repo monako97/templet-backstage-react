@@ -1,4 +1,4 @@
-import { request, type ResponseBody } from '@moneko/request';
+import { request, type GenericResponse } from '@moneko/request';
 
 import type { UserInfo } from '@/store/account';
 
@@ -10,13 +10,13 @@ export type LoginParams = {
 
 // 用户名登录
 export const loginByUserName = async (params: LoginParams) =>
-  request<ResponseBody<UserInfo>>('/login_by_username', {
+  request<GenericResponse<UserInfo>>('/login_by_username', {
     data: params,
     method: 'POST',
   });
 // email登录
 export const loginByEmail = async (params: LoginParams) =>
-  request<ResponseBody<UserInfo>>('/login_by_email', {
+  request<GenericResponse<UserInfo>>('/login_by_email', {
     data: params,
     method: 'POST',
   });
@@ -28,10 +28,10 @@ export type ForgotPassWordParams = LoginParams & {
 
 // 修改密码
 export const changePassword = async (params: ForgotPassWordParams) =>
-  request<ResponseBody<boolean>>('/forget_password', {
+  request<GenericResponse<boolean>>('/forget_password', {
     data: params,
     method: 'POST',
   });
 // 获取验证码
 export const getForgetVerifyCode = async (email: string) =>
-  request<ResponseBody<boolean>>('/forget_pwd_verify_code', { method: 'POST', data: { email } });
+  request<GenericResponse<boolean>>('/forget_pwd_verify_code', { method: 'POST', data: { email } });

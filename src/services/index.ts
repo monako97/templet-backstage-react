@@ -21,7 +21,7 @@ export const decrypt = (string: string): string | false => {
 extend({
   // 配置拦截器
   interceptor: {
-    request(req) {
+    async request(req) {
       if (req.method === 'POST') {
         // 在请求发送前对请求数据统一拦截进行RSA加密(视业务情况调整)
         const encryptString = encrypt.encryptLong(JSON.stringify(req.data));
@@ -30,10 +30,10 @@ extend({
       }
       return req;
     },
-    httpError(xhr) {
+    async httpError(res) {
       // 请求失败时进行统一处理
-      message.error(xhr.response?.message || `${xhr.status}: ${xhr.statusText}`);
-      if (xhr.response?.status === 401) {
+      message.error(res?.message || `${res.status}: ${res.statusText}`);
+      if (res?.status === 401) {
         account.logout();
       }
       return;
