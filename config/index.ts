@@ -32,12 +32,6 @@ const conf: Partial<ConfigType> = {
   },
   // 路由懒加载发生时使用的 fallback
   fallbackCompPath: '@/components/fallback',
-  // 按需引入
-  importOnDemand: {
-    lodash: {
-      transform: '${member}',
-    },
-  },
 };
 
 export default conf;
