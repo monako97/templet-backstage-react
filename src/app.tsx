@@ -1,5 +1,5 @@
 import React, { Fragment, useCallback, useEffect, useMemo, useRef } from 'react';
-import { prefixCls, name, routerMode, projectName, version, author } from '@app/info';
+import { author, name, prefixCls, projectName, routerMode, version } from '@app/info';
 import localizable from '@app/locales';
 import { printBanner, watermark } from '@moneko/common';
 import { Navigate, useLocation, useNavigate, useOutlet } from '@moneko/react';

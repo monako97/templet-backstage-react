@@ -8,6 +8,7 @@ import * as styles from './index.less';
 
 const Home: React.FC = () => {
   const { t } = localizable;
+  const { info } = account;
 
   return (
     <React.Fragment>
@@ -16,7 +17,7 @@ const Home: React.FC = () => {
         <details>
           <summary>{t['user-info']}</summary>
           <pre>
-            <code>{JSON.stringify(account.info, null, 4)}</code>
+            <code>{JSON.stringify(info, null, 4)}</code>
           </pre>
         </details>
         <details>

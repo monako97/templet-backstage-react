@@ -1,4 +1,4 @@
-import { PUBLIC_KEY, PRIVATE_KEY } from '@app/security'; // 密钥使用虚拟模块
+import { PRIVATE_KEY, PUBLIC_KEY } from '@app/security'; // 密钥使用虚拟模块
 import { extend } from '@moneko/request';
 import { message } from 'antd';
 // RSA 加密
@@ -40,5 +40,5 @@ extend({
     },
   },
   // 添加公共前缀
-  prefixUrl: '/api',
+  prefix: '/api',
 });

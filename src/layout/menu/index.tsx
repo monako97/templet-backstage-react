@@ -37,13 +37,7 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
             ) : null,
             icon: isValidElement(icon) ? icon : icon ? <IconFont type={icon} /> : void 0,
             label:
-              path && !childrens?.length ? (
-                <Link preventScrollReset to={`${id}?menuId=${id}`}>
-                  {text}
-                </Link>
-              ) : (
-                text
-              ),
+              path && !childrens?.length ? <Link to={`${id}?menuId=${id}`}>{text}</Link> : text,
           },
           childrens?.length
             ? ({
@@ -65,9 +59,10 @@ const LayoutMenu: React.FC<LayoutMenuProps> = (prop) => {
 
   useEffect(() => {
     const current = menuId && kv[menuId];
+    const expandKey = menu.getExpandKey();
 
-    if (current && !collapsed && menu.expandKey) {
-      const opk = [...menu.expandKey];
+    if (current && !collapsed && expandKey) {
+      const opk = [...expandKey];
 
       if (!opk.includes(menuId as string)) opk.push(menuId as string);
       if (current.parentId && !opk.includes(current.parentId)) opk.push(current.parentId);

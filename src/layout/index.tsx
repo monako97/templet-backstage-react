@@ -1,7 +1,7 @@
 import React, { type FC, type ReactNode, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { name } from '@app/info';
-import { useOutlet } from '@moneko/react';
+import { Outlet } from '@moneko/react';
 import { Layout } from 'antd';
 
 import { global } from '@/store/global';
@@ -15,7 +15,6 @@ import * as styles from './index.less';
 
 const DashboardLayout: FC<{ children?: ReactNode }> = ({ children }) => {
   const { theme } = global;
-  const outlet = useOutlet();
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
   return (
@@ -38,7 +37,7 @@ const DashboardLayout: FC<{ children?: ReactNode }> = ({ children }) => {
       <Layout className={styles.section}>
         <LayoutHeader />
         <Layout.Content className={styles.content}>
-          <div className={styles.view}>{children || outlet}</div>
+          <div className={styles.view}>{children ?? <Outlet />}</div>
           <LayoutFooter />
         </Layout.Content>
       </Layout>

@@ -3,7 +3,7 @@ import localizable, { template } from '@app/locales';
 import { Link } from '@moneko/react';
 import { Tabs, Typography } from 'antd';
 import type { RuleObject } from 'antd/es/form';
-import CustomForm from 'custom-form-ant';
+import { CustomForm } from 'custom-form-ant';
 
 import IconFont from '@/components/iconfont';
 import { account } from '@/store/account';
@@ -13,8 +13,8 @@ import * as styles from './index.less';
 
 const USERNAME_RegExp = /^([a-zA-Z0-9\\_\\-\\.]|[\u4E00-\u9FA5]){2,10}$/;
 
+const { t } = localizable;
 const Login: React.FC = () => {
-  const { t } = localizable;
   const { logining } = account;
   const [type, setType] = useState('username');
 
@@ -47,7 +47,7 @@ const Login: React.FC = () => {
             className={styles.tabs}
             activeKey={type}
             centered
-            destroyInactiveTabPane
+            destroyOnHidden
             onChange={setType}
             items={[
               {

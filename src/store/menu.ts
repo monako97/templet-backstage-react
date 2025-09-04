@@ -31,6 +31,9 @@ export const menu = sso({
   activeKey: persistence.load(activeKeyPersistenceKey, 'home'),
   /** 展开菜单的key[] */
   expandKey: persistence.load(expandKeyPersistenceKey, [] as string[]),
+  getExpandKey() {
+    return this.expandKey;
+  },
   /** 当前用户可访问的菜单列表 */
   menus: persistence.load('menu.menus', [] as MenuItem[]),
   /** 菜单列表的kv数据, 根据menus自动生成 */

@@ -1,4 +1,4 @@
-import { request, type GenericResponse } from '@moneko/request';
+import { type GenericResponse, request } from '@moneko/request';
 
 import type { UserInfo } from '@/store/account';
 

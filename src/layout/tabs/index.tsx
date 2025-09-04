@@ -90,7 +90,7 @@ function LayoutTabs() {
               },
             }}
             trigger={['contextMenu']}
-            destroyPopupOnHide
+            destroyOnHidden
           >
             <div>
               {isValidElement(icon) ? icon : icon ? <IconFont type={icon} /> : null}

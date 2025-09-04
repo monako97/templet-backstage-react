@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import localizable, { template } from '@app/locales';
 import { Button, Form, message, Typography } from 'antd';
-import CustomForm from 'custom-form-ant';
+import { CustomForm } from 'custom-form-ant';
 
 import GoBack from '@/components/go-back';
 import IconFont from '@/components/iconfont';

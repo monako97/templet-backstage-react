@@ -12,6 +12,7 @@ import * as styles from './index.less';
 
 const LayoutHeader = () => {
   const { t } = localizable;
+  const { info } = account;
 
   const items = useMemo<MenuProps['items']>(
     () => [
@@ -34,9 +35,9 @@ const LayoutHeader = () => {
         <Dropdown menu={{ items }} placement="bottom">
           <div className={styles.user}>
             <Badge count={0}>
-              <Avatar src={account.info?.avatar}>{account.info?.username}</Avatar>
+              <Avatar src={info?.avatar}>{info?.username}</Avatar>
             </Badge>
-            <span className={styles.username}>{account.info?.username}</span>
+            <span className={styles.username}>{info?.username}</span>
           </div>
         </Dropdown>
         <SwitchLanguage className={styles.lang} />
