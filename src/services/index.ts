@@ -1,4 +1,4 @@
-import { PRIVATE_KEY, PUBLIC_KEY } from '@app/security'; // 密钥使用虚拟模块
+import { PRIVATE_KEY, PUBLIC_KEY } from 'vm:security'; // 密钥使用虚拟模块
 import { extend } from '@moneko/request';
 import { message } from 'antd';
 // RSA 加密

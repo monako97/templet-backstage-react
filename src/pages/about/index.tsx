@@ -1,5 +1,5 @@
 import React from 'react';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 import { useOutlet } from '@moneko/react';
 import { Typography } from 'antd';
 

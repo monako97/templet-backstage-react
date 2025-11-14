@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import localizable, { locales, setLang } from '@app/locales';
+import localizable, { locales, setLang } from 'app:locales';
 import { Dropdown, type MenuProps, Typography } from 'antd';
 
 import IconFont from '@/components/iconfont';

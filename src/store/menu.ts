@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { RouteConfig } from '@app/routes';
+import type { RouteConfig } from 'app:routes';
 import { isEqual, isFunction, persistence } from '@moneko/common';
 import sso from 'shared-store-object';
 

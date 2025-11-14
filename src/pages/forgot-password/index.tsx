@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import localizable, { template } from '@app/locales';
+import localizable, { template } from 'app:locales';
 import { Button, Form, message, Typography } from 'antd';
 import { CustomForm } from 'custom-form-ant';
 

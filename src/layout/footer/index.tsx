@@ -1,5 +1,5 @@
 import React from 'react';
-import { author, projectName, repository } from '@app/info';
+import { author, projectName, repository } from 'app:info';
 import { Layout, Typography } from 'antd';
 
 import * as styles from './index.less';

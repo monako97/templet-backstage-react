@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 import { message } from 'antd';
 import { addGlobalUncaughtErrorHandler, loadMicroApp, type MicroApp } from 'qiankun';
 

@@ -1,4 +1,4 @@
-import routes from '@app/routes';
+import routes from 'app:routes';
 import { isFunction, persistence } from '@moneko/common';
 import sso from 'shared-store-object';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 
 import Marquee from '@/components/marquee';
 import { account } from '@/store/account';

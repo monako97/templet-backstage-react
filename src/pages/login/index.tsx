@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import localizable, { template } from '@app/locales';
+import localizable, { template } from 'app:locales';
 import { Link } from '@moneko/react';
 import { Tabs, Typography } from 'antd';
 import type { RuleObject } from 'antd/es/form';

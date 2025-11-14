@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { LogoutOutlined } from '@ant-design/icons';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 import { Avatar, Badge, Dropdown, Layout, type MenuProps } from 'antd';
 
 import SwitchLanguage from '@/components/switch-language';

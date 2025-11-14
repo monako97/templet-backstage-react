@@ -1,5 +1,5 @@
 import React, { isValidElement, useCallback, useEffect, useMemo } from 'react';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 import { Link, useSearchParams } from '@moneko/react';
 import { Menu, type MenuProps } from 'antd';
 

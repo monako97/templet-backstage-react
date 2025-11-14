@@ -1,6 +1,6 @@
 import React, { isValidElement, useCallback, useEffect, useMemo } from 'react';
 import { CloseOutlined, DeleteRowOutlined, ReloadOutlined } from '@ant-design/icons';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 import { useNavigate, useSearchParams } from '@moneko/react';
 import { Dropdown, Tabs } from 'antd';
 import type { MenuItemType } from 'antd/es/menu/interface';

@@ -1,6 +1,6 @@
 import React, { type FC, type ReactNode, useState } from 'react';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import { name } from '@app/info';
+import { name } from 'app:info';
 import { Outlet } from '@moneko/react';
 import { Layout } from 'antd';
 

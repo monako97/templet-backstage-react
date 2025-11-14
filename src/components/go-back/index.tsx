@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import localizable from '@app/locales';
+import localizable from 'app:locales';
 import { type To, useNavigate, useSearchParams } from '@moneko/react';
 import { Typography } from 'antd';
 import type { LinkProps } from 'antd/es/typography/Link';
